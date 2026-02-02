@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+/* Regular */
+@font-face {
+  font-family: 'CocoSharp';
+  src: url('./assets/font/Coco-Sharp-Extralight-trial.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'CocoSharp';
+  src: url('./assets/font/Coco-Sharp-Extralight-Italic-trial.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'CocoSharp';
+  src: url('./assets/font/Coco-Sharp-Extrabold-trial.ttf') format('truetype');
+  font-weight: 800;
+  font-style: bold;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-coco: 'CocoSharp', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg,#000000,#f2cc6a);
+  color: white;
+  overflow-x: hidden;
+}
+
+
+a {
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  padding: 0.6em 1.2em;  
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+li button {
+  transition:
+    background-color 300ms ease,
+    color 300ms ease,
+    box-shadow 300ms ease,
+    transform 200ms ease;
+}
+
+li button:hover {
+  transform: translateY(-1px);
+}
+
+section {
+  scroll-margin-top: 90px;
+}
+
+.slider-container {
+  width: 100%;
+  margin: 50px auto;
+}
+
+.logo-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo-slide img {
+  width: 120px;
+  height: auto;
+  opacity: 0.6; /* Logos latéraux plus discrets */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.slick-center img {
+  transform: scale(1); /* Logo central plus grand */
+  opacity: 1;             /* Logo central plus visible */
+}
+
+
+.slick-prev:before, .slick-next:before {
+  font-size: 40px;
+  background-color: linear-gradient(135deg, #4b0082, #6a0dad, #007bff);
+}
+
+.hex {
+  width: 200Px;
+  height: 215px;
+  position: relative;
+}
+
+.hex-inner {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+  position: relative;
+  transition: transform 0.4s ease;
+  background-clip: border-box;
+}
+
+.hex-inner:hover {
+  transform: scale(1.05);
+}
+
+.hex-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.2)
+  );
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.hex-inner:hover .hex-overlay {
+  opacity: 1;
+}
+
+.logo-box {
+  height: 120px;
+  background: #d9c3a2; /* change selon ton thème */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.logo-box:hover {
+  transform: scale(1.05);
+}
+
+.logo-box img {
+  max-height: 70%;
+  max-width: 70%;
+  object-fit: contain;
+}
+
+
+/* Mobile : encore plus d’espace */
+@media (max-width: 768px) {
+  .logo-slide {
+    padding: 0 20px;
+  }
+
+  .logo-slide img {
+    width: 160px;
+  }
+}
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
