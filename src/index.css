@@ -30,6 +30,11 @@ body {
   background: linear-gradient(135deg,#000000,#f2cc6a);
   color: white;
   overflow-x: hidden;
+   margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
 
@@ -42,13 +47,6 @@ a:hover {
   color: #ffffff;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
 
 h1 {
   font-size: 3.2em;
@@ -76,6 +74,14 @@ li button:hover {
 
 section {
   scroll-margin-top: 90px;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .slider-container {
@@ -159,7 +165,7 @@ section {
 
 .logo-box {
   height: 120px;
-  background: #d9c3a2; /* change selon ton thème */
+  background: #d9c3a2; 
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -190,16 +196,3 @@ section {
   }
 }
 
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}

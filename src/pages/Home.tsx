@@ -71,7 +71,7 @@ const Home = () => {
             <motion.img
               src="/jp-full.png"
               alt="Portrait"
-              className="relative w-150 h-150 object-contain rounded-full"
+              className="relative w-100 h-100 object-contain rounded-full"
             />
           </div>
 

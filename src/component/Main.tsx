@@ -1,9 +1,8 @@
-import About from "../pages/About";
+import Skill from "../pages/Skill";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
 import Projects from "../pages/Projets";
 import BackToTop from "./BackToTop";
-
 
 const Main = () => {
     return (
@@ -12,8 +11,8 @@ const Main = () => {
                 <Home />
             </section>
 
-            <section id="À propos">
-                <About />
+            <section id="Compétences">
+                <Skill />
             </section>
 
             <section id="Projets">
@@ -23,7 +22,7 @@ const Main = () => {
             <section id="Contact">
                 <Contact />
             </section>
-            <BackToTop/>
+            <BackToTop />
         </main>
     );
 };

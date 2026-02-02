@@ -57,7 +57,7 @@ const chunkSlides = (items: GridItem[], size = 6): GridSlide[] =>
 
 export default function Carousel({ active }: CarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlay, setIsAutoPlay] = useState(false)
+  const [isAutoPlay, setIsAutoPlay] = useState(true)
   const [activeImage, setActiveImage] = useState<string | null>(null)
   const [direction, setDirection] = useState<1 | -1>(1)
 
@@ -108,7 +108,7 @@ export default function Carousel({ active }: CarouselProps) {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-1">
-      <div className="w-full max-w-7afxl flex items-center gap-4">
+      <div className="w-full max-w-7xl flex items-center gap-4">
 
         {/* Bouton précédent */}
         <span
@@ -128,7 +128,7 @@ export default function Carousel({ active }: CarouselProps) {
         <div
           className="flex-1 overflow-hidden rounded-lg bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90"
           onMouseEnter={() => setIsAutoPlay(false)}
-          onMouseLeave={() => setIsAutoPlay(false)}
+          onMouseLeave={() => setIsAutoPlay(true)}
         >
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -138,11 +138,11 @@ export default function Carousel({ active }: CarouselProps) {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full h-125 p-8"
+              className="w-full h-125 p-2"
             >
 
               <div
-                className={`grid gap-4 h-full ${window.innerWidth <= 640
+                className={`grid gap-2 h-full ${window.innerWidth <= 640
                   ? "grid-cols-1 grid-rows-1" // Mobile : 2 colonnes, 1 ligne
                   : "grid-cols-4 grid-rows-4" // Desktop : 4x4
                   }`}
