@@ -26,20 +26,20 @@ const Home = () => {
           className="flex flex-col items-center"
         >
           {/* TITRE */}
-          <h2
-
-            className="text-5xl leading-tight mb-4"
-          >
+          <h2 className="text-5xl leading-tight mb-4">
             <span className="block font-coco font-extralight bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] to-white/90">
               Bienvenue Chez
             </span>
-            <span 
-            style={{
-              transform: 'skewY(-2deg)',
-            }} 
-            className="block p-1 bg-linear-to-r from-[#f2cc6a] to-white/90"
+            <span
+              style={{
+                transform: "skewY(-2deg)",
+              }}
+              className="block p-1 bg-linear-to-r from-[#f2cc6a] to-white/90"
             >
-              <p className="font-coco font-extrabold text-black/90"> JP GRAPHIC DESIGN</p>
+              <p className="font-coco font-extrabold text-black/90">
+                {" "}
+                JP GRAPHIC DESIGN
+              </p>
             </span>
           </h2>
 
@@ -69,12 +69,13 @@ const Home = () => {
 
             {/* Image */}
             <motion.img
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               src="/jp-full.png"
               alt="Portrait"
               className="relative w-100 h-100 object-contain rounded-full"
             />
           </div>
-
 
           {/* BOUTONS */}
           <div className="flex justify-center gap-4 flex-wrap">

@@ -1,4 +1,6 @@
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from 'lucide-react'
+import { useState } from 'react'
 
 export interface ProjectProps {
   title: string;
@@ -12,63 +14,53 @@ export interface ProjectCardProps extends ProjectProps {
 }
 
 
-const HexagonCard = ({ image, title, category, description, tags, onSelect }: ProjectCardProps) => {
-  return (
+const HexagonCard = ({ image, title, category, tags, onSelect }: ProjectCardProps) => {
+    const [isHover, setIsHover] = useState(false);
+
+ return (
     <div
       onClick={() => onSelect(category)}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
       className="hex group cursor-pointer"
     >
       <div
         className="hex-inner"
         style={{ backgroundImage: `url(${image})` }}
       >
-        <div className="hex-overlay flex flex-col items-center justify-center text-center h-full w-full transition-all duration-300">
+        <div className="hex-overlay flex flex-col items-center justify-center text-center h-full w-full">
 
           {/* TITRE */}
-          <h3 className="text-lg font-coco font-extrabold transition-colors duration-300 ">
+          <h3 className="text-lg font-coco font-extrabold transition-all duration-300">
             {title}
           </h3>
 
-          {/* DESCRIPTION */}
-          <p className="text-sm opacity-80 transition-colors duration-300 /90">
-            {description}
-          </p>
-
-          {/* TAGS */}
-          <div className="flex flex-wrap justify-center gap-2  text-xs">
-            {tags.map((t, i) => (
-              <span
-                key={i}
-                className="
-                  px-2 py-0.5 rounded-full
-                  bg-white/20 text-white
-                  font-coco font-extralight italic
-                  transition-all duration-300
-                  group-hover:bg-linear-to-r from-[#f2cc6a] to-[#f2a500]                  
-                "
+          {/* TAGS avec animation */}
+          <AnimatePresence>
+            {isHover && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+                className="mt-3 flex flex-wrap justify-center gap-2 text-xs"
               >
-                {t}
-              </span>
-            ))}
-          </div>
+                {tags.map((t, i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-0.5 rounded-full bg-white/20 text-white font-coco font-extralight italic group-hover:bg-linear-to-r from-[#f2cc6a] to-[#f2a500] transition"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          {/* BOUTON ROND */}
+          {/* BOUTON */}
           <span
             onClick={() => onSelect(category)}
-            className="
-              cursor-pointer
-              mt-4
-              w-10 h-10
-              text-white
-              rounded-full
-              flex items-center justify-center
-              bg-linear-to-r from-[#f2cc6a] to-[#f2a500]
-              opacity-0 scale-75
-              transition-all duration-300
-              group-hover:opacity-100
-              group-hover:scale-100
-              hover:scale-110
-            "
+            className="mt-4 w-10 h-10 text-white rounded-full flex items-center justify-center bg-linear-to-r from-[#f2cc6a] to-[#f2a500] transition-transform duration-300 hover:scale-110"
           >
             <ArrowRight size={24} strokeWidth={3} />
           </span>

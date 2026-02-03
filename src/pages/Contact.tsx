@@ -57,6 +57,10 @@ export default function Contact() {
 
         {/* Formulaire */}
         <motion.form
+        initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
           ref={formRef}
           onSubmit={handleSubmit}
           className="bg-white/5 p-6 rounded-2xl border-2 border-[#f2cc6a] shadow-md space-y-2"
@@ -102,7 +106,11 @@ export default function Contact() {
         </motion.form>
 
         {/* Section SVG + contact */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
           className="w-full  border-2 border-[#f2cc6a] bg-no-repeat bg-center bg-cover rounded-2xl relative h-80 sm:h-auto"
           style={{ backgroundImage: `url('/aigle2.svg')` }}
         >
@@ -178,7 +186,7 @@ export default function Contact() {
               </a>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </div>

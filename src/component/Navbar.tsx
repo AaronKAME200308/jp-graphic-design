@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const links = [
   { label: "Accueil", to: "/" },
+  { label: "A propos", to: "/about" },
   { label: "Compétences", to: "/skills" },
   { label: "Projets", to: "/projects" },  
   { label: "Contact", to: "/contact" },
@@ -57,8 +58,8 @@ const Navbar = () => {
           transition={{ duration: 0.35 }}
           className="text-2xl font-coco font-extrabold tracking-wide bg-clip-text text-transparent bg-[#f2cc6a]"
         >
-          JP
-          <span className="font-coco font-extralight text-sm ml-2 text-white/70">
+          <img src="/logoblanc.png" alt="Logo JP Graphic Design" className="w-10 h-10 inline-block -mt-1" />
+          <span className="font-coco font-extralight text-sm text-white/70">
             Graphic Design
           </span>
         </motion.p>

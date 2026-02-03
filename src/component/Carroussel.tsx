@@ -5,7 +5,6 @@ import type { Variants } from "framer-motion"
 import { ALL_ITEMS } from "../data/carouselItems"
 import type { GridItem } from "../data/carouselItems"
 
-
 const slideVariants: Variants = {
   initial: (direction: number) => ({
     opacity: 0,
@@ -45,11 +44,12 @@ const TITLES = [
   { title: "Retouche Photo", itemsPerSlide: 2 },
   { title: "Miniature", itemsPerSlide: 4 },
   { title: "Campagne Académique", itemsPerSlide: 5 },
-  { title: "Dépliant Professionnel", itemsPerSlide: 8 }
+  { title: "Dépliant Professionnel", itemsPerSlide: 8 },
+  { title: "Présentation", itemsPerSlide: 4 }
 ]
 
-// 🔹 Découpe en slides de 6 max
-const chunkSlides = (items: GridItem[], size = 6): GridSlide[] =>
+// Découpe en slides
+const chunkSlides = (items: GridItem[], size: number): GridSlide[] =>
   Array.from({ length: Math.ceil(items.length / size) }, (_, i) => ({
     id: `slide-${i}`,
     items: items.slice(i * size, i * size + size),
@@ -57,44 +57,35 @@ const chunkSlides = (items: GridItem[], size = 6): GridSlide[] =>
 
 export default function Carousel({ active }: CarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlay, setIsAutoPlay] = useState(true)
+  const [isAutoPlay, setIsAutoPlay] = useState(false)
   const [activeImage, setActiveImage] = useState<string | null>(null)
   const [direction, setDirection] = useState<1 | -1>(1)
+  const [isMobile, setIsMobile] = useState(false)
 
+  // 🔒 safe mobile detection
+  useEffect(() => {
+    const update = () => setIsMobile(window.innerWidth <= 640)
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [])
 
   const getItemsPerSlide = (title: string) => {
-    // Récupère la config du title
     const config = TITLES.find(t => t.title === title)
-    if (!config) return 6 // valeur par défaut
-
-    // Ajuste selon la taille de l’écran
-    if (typeof window !== "undefined" && window.innerWidth <= 640) {
-      return Math.min(1, config.itemsPerSlide) // mobile = 1 item par slide
-    }
-
-    return config.itemsPerSlide
+    if (!config) return 6
+    return isMobile ? 1 : config.itemsPerSlide
   }
-
-
-  useEffect(() => {
-    const handleResize = () => {
-      setCurrentSlide(0) // reset slide si le nombre change
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [active])
-
 
   const filteredItems = ALL_ITEMS.filter(item => item.filter === active)
   const itemsPerSlide = getItemsPerSlide(active)
   const CAROUSEL_SLIDES = chunkSlides(filteredItems, itemsPerSlide)
 
-
+  // reset index when data changes
   useEffect(() => {
     setCurrentSlide(0)
   }, [active, itemsPerSlide])
 
+  // autoplay sécurisé
   useEffect(() => {
     if (!isAutoPlay || CAROUSEL_SLIDES.length <= 1) return
     const interval = setInterval(() => {
@@ -104,35 +95,35 @@ export default function Carousel({ active }: CarouselProps) {
   }, [isAutoPlay, CAROUSEL_SLIDES.length])
 
   if (!CAROUSEL_SLIDES.length) return null
-  const currentSlideData = CAROUSEL_SLIDES[currentSlide]
+
+  // index sécurisé (CRITIQUE)
+  const safeIndex = Math.min(currentSlide, CAROUSEL_SLIDES.length - 1)
+  const currentSlideData = CAROUSEL_SLIDES[safeIndex]
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-1">
       <div className="w-full max-w-7xl flex items-center gap-4">
 
-        {/* Bouton précédent */}
+        {/* PREV */}
         <span
           onClick={() => {
             setDirection(-1)
-            setCurrentSlide(
-              (currentSlide - 1 + CAROUSEL_SLIDES.length) % CAROUSEL_SLIDES.length
-            )
+            setCurrentSlide((safeIndex - 1 + CAROUSEL_SLIDES.length) % CAROUSEL_SLIDES.length)
           }}
-
-          className="sm:flex hidden items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform"
+          className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform"
         >
-          <ChevronLeft className="w-5 h-5" color='white' strokeWidth={2} />
+          <ChevronLeft className="w-5 h-5" />
         </span>
 
-        {/* Carousel */}
+        {/* CAROUSEL */}
         <div
           className="flex-1 overflow-hidden rounded-lg bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90"
           onMouseEnter={() => setIsAutoPlay(false)}
-          onMouseLeave={() => setIsAutoPlay(true)}
+          onMouseLeave={() => setIsAutoPlay(false)}
         >
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
-              key={currentSlide}
+              key={safeIndex}
               custom={direction}
               variants={slideVariants}
               initial="initial"
@@ -140,44 +131,46 @@ export default function Carousel({ active }: CarouselProps) {
               exit="exit"
               className="w-full h-125 p-2"
             >
-
               <div
-                className={`grid gap-2 h-full ${window.innerWidth <= 640
-                  ? "grid-cols-1 grid-rows-1" // Mobile : 2 colonnes, 1 ligne
-                  : "grid-cols-4 grid-rows-4" // Desktop : 4x4
-                  }`}
-              >
-                {currentSlideData.items.map((item) => (
+  className={
+    isMobile
+      ? "flex h-full"
+      : "grid gap-2 h-full grid-cols-4 grid-rows-4"
+  }
+>
+
+                {currentSlideData?.items?.map(item => (
                   <motion.div
                     key={item.id}
                     layout
-                    onClick={() => setActiveImage(item.image)}
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.3}
-                    onDragEnd={(_event, info) => {
+                    onDragEnd={(_, info) => {
                       if (info.offset.x < -50) {
                         setDirection(1)
-                        setCurrentSlide((currentSlide + 1) % CAROUSEL_SLIDES.length)
+                        setCurrentSlide((safeIndex + 1) % CAROUSEL_SLIDES.length)
                       } else if (info.offset.x > 50) {
                         setDirection(-1)
-                        setCurrentSlide(
-                          (currentSlide - 1 + CAROUSEL_SLIDES.length) % CAROUSEL_SLIDES.length
-                        )
+                        setCurrentSlide((safeIndex - 1 + CAROUSEL_SLIDES.length) % CAROUSEL_SLIDES.length)
                       }
                     }}
-
+                    onClick={() => setActiveImage(item.image)}
                     whileHover={{
                       borderWidth: 2,
                       borderColor: "white",
-                      boxShadow: "0 25px 30px rgba(255, 255, 255, 0.8)",
+                      boxShadow: "0 25px 30px rgba(255,255,255,0.8)",
                     }}
                     className="rounded-lg overflow-hidden group cursor-pointer w-full h-full"
-                    style={{
-                      gridColumn: `span ${window.innerWidth <= 640 ? 1 : item.colSpan
-                        }`,
-                      gridRow: `span ${window.innerWidth <= 640 ? 1 : item.rowSpan}`,
-                    }}
+                   style={
+  isMobile
+    ? {}
+    : {
+        gridColumn: `span ${item.colSpan}`,
+        gridRow: `span ${item.rowSpan}`,
+      }
+}
+
                   >
                     <img
                       src={item.image}
@@ -187,46 +180,54 @@ export default function Carousel({ active }: CarouselProps) {
                   </motion.div>
                 ))}
               </div>
-
-
             </motion.div>
           </AnimatePresence>
-
         </div>
 
-        {/* Bouton suivant */}
+        {/* NEXT */}
         <span
           onClick={() => {
             setDirection(1)
-            setCurrentSlide((currentSlide + 1) % CAROUSEL_SLIDES.length)
+            setCurrentSlide((safeIndex + 1) % CAROUSEL_SLIDES.length)
           }}
-
-          className="sm:flex hidden items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform"
+          className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform"
         >
           <ChevronRight className="w-5 h-5" />
         </span>
       </div>
-      {/* INDICATEUR DE SLIDE – MOBILE */}
-      <div className="sm:hidden flex justify-center gap-2 mt-4">
-        {CAROUSEL_SLIDES.map((_, index) => (
-          <motion.span
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className="cursor-pointer rounded-full"
-            animate={{
-              width: index === currentSlide ? 24 : 8,
-              height: 8,
-              backgroundColor:
-                index === currentSlide
-                  ? "rgba(255,255,255,1)"
-                  : "rgba(255,255,255,0.4)",
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
-        ))}
+
+      {/* DOTS MOBILE */}
+      {/* INDICATEUR DE SLIDE – MOBILE (limité) */}
+      <div className="sm:hidden flex justify-center gap-2 mt-4 overflow-hidden max-w-full">
+        {CAROUSEL_SLIDES
+          .slice(
+            Math.max(0, safeIndex - 2),
+            Math.min(CAROUSEL_SLIDES.length, safeIndex + 3)
+          )
+          .map((_, index) => {
+            const realIndex = Math.max(0, safeIndex - 2) + index
+
+            return (
+              <motion.span
+                key={realIndex}
+                onClick={() => setCurrentSlide(realIndex)}
+                className="cursor-pointer rounded-full shrink-0"
+                animate={{
+                  width: realIndex === safeIndex ? 24 : 8,
+                  height: 8,
+                  backgroundColor:
+                    realIndex === safeIndex
+                      ? "rgba(255,255,255,1)"
+                      : "rgba(255,255,255,0.4)",
+                }}
+                transition={{ duration: 0.3 }}
+              />
+            )
+          })}
       </div>
 
 
+      {/* MODAL IMAGE */}
       <AnimatePresence>
         {activeImage && (
           <motion.div
@@ -248,8 +249,6 @@ export default function Carousel({ active }: CarouselProps) {
           </motion.div>
         )}
       </AnimatePresence>
-
     </div>
-
   )
 }
