@@ -192,6 +192,15 @@ textarea::placeholder{
   object-fit: contain;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 
 /* Mobile : encore plus d’espace */
 @media (max-width: 768px) {
