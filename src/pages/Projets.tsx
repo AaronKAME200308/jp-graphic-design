@@ -150,7 +150,7 @@ const Projects = () => {
             </div>
 
             {/* ROW 2 */}
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 -mt-10">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 mt-4 md:-mt-10">
               {filterProjects(projects.second).map((project, i: number) => (
                 <HexagonCard
                   key={`second-${i}`}

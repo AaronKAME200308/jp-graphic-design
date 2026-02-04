@@ -37,6 +37,9 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "28", colSpan: 1, rowSpan: 4, image: "/bt30.jpeg", filter: "Event Posters" },
     { id: "29", colSpan: 1, rowSpan: 4, image: "/bt31.jpeg", filter: "Event Posters" },
     { id: "30", colSpan: 1, rowSpan: 2, image: "/bt32.jpeg", filter: "Event Posters" },
+    { id: "184", colSpan: 1, rowSpan: 2, image: "/bt35.jpeg", filter: "Event Posters" },
+    { id: "185", colSpan: 1, rowSpan: 2, image: "/bt34.jpeg", filter: "Event Posters" },
+
 
     { id: "31", colSpan: 2, rowSpan: 4, image: "/ac.jpeg", filter: "Concert" },
     { id: "32", colSpan: 2, rowSpan: 2, image: "/ac1.jpeg", filter: "Concert" },
@@ -69,9 +72,7 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "56", colSpan: 1, rowSpan: 2, image: "/idv35.jpeg", filter: "Identité visuel" },
     { id: "57", colSpan: 2, rowSpan: 4, image: "/idv36.jpeg", filter: "Identité visuel" },
     { id: "58", colSpan: 1, rowSpan: 2, image: "/idv37.jpeg", filter: "Identité visuel" },
-    { id: "59", colSpan: 1, rowSpan: 2, image: "/idv23.jpeg", filter: "Identité visuel" },
-    { id: "60", colSpan: 1, rowSpan: 4, image: "/idv24.jpeg", filter: "Identité visuel" },
-    { id: "61", colSpan: 1, rowSpan: 2, image: "/idv26.jpeg", filter: "Identité visuel" },
+
     { id: "62", colSpan: 2, rowSpan: 4, image: "/rtp1.jpeg", filter: "Retouche Photo" },
     { id: "63", colSpan: 2, rowSpan: 4, image: "/rtp.jpeg", filter: "Retouche Photo" },
     { id: "64", colSpan: 2, rowSpan: 4, image: "/rtp2.jpeg", filter: "Retouche Photo" },
@@ -91,7 +92,7 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "76", colSpan: 1, rowSpan: 2, image: "/ca10.jpeg", filter: "Campagne Académique" },
     { id: "77", colSpan: 1, rowSpan: 2, image: "/ca5.jpeg", filter: "Campagne Académique" },
     { id: "78", colSpan: 2, rowSpan: 4, image: "/ca6.jpeg", filter: "Campagne Académique" },
-    { id: "79", colSpan: 1, rowSpan: 2, image: "/ca7.jpeg", filter: "Campagne Académique" },
+    { id: "79", colSpan: 1, rowSpan: 2, image: "/af37.jpeg", filter: "Campagne Académique" },
     { id: "80", colSpan: 1, rowSpan: 2, image: "/ca8.jpeg", filter: "Campagne Académique" },
     { id: "81", colSpan: 1, rowSpan: 2, image: "/ca9.jpeg", filter: "Campagne Académique" },
     { id: "82", colSpan: 2, rowSpan: 1, image: "/ca4.jpeg", filter: "Campagne Académique" },
@@ -100,9 +101,7 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "85", colSpan: 1, rowSpan: 3, image: "/idv1.jpeg", filter: "Campagne Académique" },
     { id: "86", colSpan: 2, rowSpan: 2, image: "/ac11.jpeg", filter: "Campagne Académique" },
     { id: "181", colSpan: 1, rowSpan: 2, image: "/af28.jpeg", filter: "Campagne Académique" },
-    { id: "182", colSpan: 1, rowSpan: 2, image: "/af29.jpeg", filter: "Campagne Académique" },
     { id: "183", colSpan: 1, rowSpan: 2, image: "/af36.jpeg", filter: "Campagne Académique" },
-    { id: "184", colSpan: 1, rowSpan: 2, image: "/af37.jpeg", filter: "Campagne Académique" },
 
     { id: "87", colSpan: 1, rowSpan: 2, image: "/af.jpeg", filter: "Affiche" },
     { id: "88", colSpan: 1, rowSpan: 4, image: "/af21.jpeg", filter: "Affiche" },
@@ -148,7 +147,8 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "128", colSpan: 1, rowSpan: 2, image: "/af53.jpeg", filter: "Affiche" },
     { id: "129", colSpan: 1, rowSpan: 2, image: "/af43.jpeg", filter: "Affiche" },
     { id: "130", colSpan: 1, rowSpan: 2, image: "/af29-1.jpeg", filter: "Affiche" },
-    { id: "131", colSpan: 1, rowSpan: 2, image: "/af47.jpeg", filter: "Affiche" },
+    { id: "187", colSpan: 1, rowSpan: 2, image: "/af47.jpeg", filter: "Affiche" },
+    { id: "186", colSpan: 1, rowSpan: 2, image: "/af54.jpeg", filter: "Affiche" },
 
     { id: "132", colSpan: 1, rowSpan: 2, image: "/dp.jpeg", filter: "Dépliant Professionnel" },
     { id: "133", colSpan: 1, rowSpan: 2, image: "/dp1.jpeg", filter: "Dépliant Professionnel" },
@@ -173,7 +173,6 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "153", colSpan: 1, rowSpan: 2, image: "/dp20.jpeg", filter: "Dépliant Professionnel" },
     { id: "154", colSpan: 1, rowSpan: 2, image: "/dp21.jpeg", filter: "Dépliant Professionnel" },
     { id: "155", colSpan: 1, rowSpan: 2, image: "/dp22.jpeg", filter: "Dépliant Professionnel" },
-    { id: "156", colSpan: 1, rowSpan: 2, image: "/dp23.jpeg", filter: "Dépliant Professionnel" },
     { id: "157", colSpan: 1, rowSpan: 2, image: "/dp24.jpeg", filter: "Dépliant Professionnel" },
     { id: "158", colSpan: 1, rowSpan: 2, image: "/dp25.jpeg", filter: "Dépliant Professionnel" },
     { id: "159", colSpan: 1, rowSpan: 2, image: "/dp26.jpeg", filter: "Dépliant Professionnel" },
@@ -181,11 +180,8 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "161", colSpan: 1, rowSpan: 2, image: "/dp28.jpeg", filter: "Dépliant Professionnel" },
     { id: "162", colSpan: 1, rowSpan: 2, image: "/dp29.jpeg", filter: "Dépliant Professionnel" },
     { id: "163", colSpan: 1, rowSpan: 2, image: "/dp30.jpeg", filter: "Dépliant Professionnel" },
-    { id: "164", colSpan: 1, rowSpan: 2, image: "/dp31.jpeg", filter: "Dépliant Professionnel" },
+    {id: "164", colSpan: 2, rowSpan: 2, image: "/idv26.jpeg", filter: "Dépliant Professionnel" },
 
-    { id: "165", colSpan: 2, rowSpan: 2, image: "/pr.JPG", filter: "Présentation" },
-    { id: "166", colSpan: 2, rowSpan: 2, image: "/pr1.JPG", filter: "Présentation" },
-    { id: "167", colSpan: 2, rowSpan: 2, image: "/pr2.JPG", filter: "Présentation" },
     { id: "168", colSpan: 2, rowSpan: 2, image: "/pr3.JPG", filter: "Présentation" },
     { id: "169", colSpan: 2, rowSpan: 2, image: "/pr4.JPG", filter: "Présentation" },
     { id: "170", colSpan: 2, rowSpan: 2, image: "/pr5.JPG", filter: "Présentation" },
@@ -199,5 +195,8 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "178", colSpan: 2, rowSpan: 2, image: "/pr13.JPG", filter: "Présentation" },
     { id: "179", colSpan: 2, rowSpan: 2, image: "/pr14.JPG", filter: "Présentation" },
     { id: "180", colSpan: 2, rowSpan: 2, image: "/pr15.JPG", filter: "Présentation" },
+    { id: "165", colSpan: 2, rowSpan: 2, image: "/pr.JPG", filter: "Présentation" },
+    { id: "166", colSpan: 2, rowSpan: 2, image: "/pr1.JPG", filter: "Présentation" },
+    { id: "167", colSpan: 2, rowSpan: 2, image: "/pr2.JPG", filter: "Présentation" },
 
 ]
