@@ -7,8 +7,8 @@ import { PanelsTopLeft, ChevronLeft, ChevronRight } from "lucide-react";
 
 const filters = [
   "All",
+  "Event Posters",  
   "Affiche",
-  "Event Posters",
   "Concert",
   "Identité visuel",
   "Miniature",
@@ -20,8 +20,8 @@ const filters = [
 
 const projects = {
   first: [
-    { title: "Affiche", category: "Affiche", image: "/face.jpeg", description: "", tags: ["Menu","Sport","E-commerce","Promotion","Social media"] },
     { title: "Event Posters", category: "Event Posters", image: "/face8.JPG", description: "", tags: ["Party","Flyer","Social media"] },
+    { title: "Affiche", category: "Affiche", image: "/face.jpeg", description: "", tags: ["Menu","Sport","E-commerce","Promotion","Social media"] },
     { title: "Concert", category: "Concert", image: "/face1.jpeg", description: "", tags: ["Show","Billets","Social media"] },
     { title: "Identité visuel", category: "Identité visuel", image: "/face6.jpeg", description: "", tags: ["Logo","Product visuals","E-commerce"] },
     { title: "Miniature", category: "Miniature", image: "/face4.jpeg", description: "", tags: ["Youtube","Visuals","Social media"] },

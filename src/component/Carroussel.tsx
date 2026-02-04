@@ -62,7 +62,7 @@ export default function Carousel({ active }: CarouselProps) {
   const [direction, setDirection] = useState<1 | -1>(1)
   const [isMobile, setIsMobile] = useState(false)
 
-  // 🔒 safe mobile detection
+  // safe mobile detection
   useEffect(() => {
     const update = () => setIsMobile(window.innerWidth <= 640)
     update()
@@ -132,12 +132,12 @@ export default function Carousel({ active }: CarouselProps) {
               className="w-full h-125 p-2"
             >
               <div
-  className={
-    isMobile
-      ? "flex h-full"
-      : "grid gap-2 h-full grid-cols-4 grid-rows-4"
-  }
->
+                className={
+                  isMobile
+                    ? "flex h-full"
+                    : "grid gap-2 h-full grid-cols-4 grid-rows-4"
+                }
+              >
 
                 {currentSlideData?.items?.map(item => (
                   <motion.div
@@ -162,14 +162,14 @@ export default function Carousel({ active }: CarouselProps) {
                       boxShadow: "0 25px 30px rgba(255,255,255,0.8)",
                     }}
                     className="rounded-lg overflow-hidden group cursor-pointer w-full h-full"
-                   style={
-  isMobile
-    ? {}
-    : {
-        gridColumn: `span ${item.colSpan}`,
-        gridRow: `span ${item.rowSpan}`,
-      }
-}
+                    style={
+                      isMobile
+                        ? {}
+                        : {
+                          gridColumn: `span ${item.colSpan}`,
+                          gridRow: `span ${item.rowSpan}`,
+                        }
+                    }
 
                   >
                     <img
