@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 
 export interface ProjectProps {
@@ -15,9 +14,9 @@ export interface ProjectCardProps extends ProjectProps {
 
 
 const HexagonCard = ({ image, title, category, tags, onSelect }: ProjectCardProps) => {
-    const [isHover, setIsHover] = useState(false);
+  const [isHover, setIsHover] = useState(false);
 
- return (
+  return (
     <div
       onClick={() => onSelect(category)}
       onMouseEnter={() => setIsHover(true)}
@@ -31,9 +30,10 @@ const HexagonCard = ({ image, title, category, tags, onSelect }: ProjectCardProp
         <div className="hex-overlay flex flex-col items-center justify-center text-center h-full w-full">
 
           {/* TITRE */}
-          <h3 className="text-lg font-coco font-extrabold transition-all duration-300">
-            {title}
-          </h3>
+          <h3 className="text-4xl sm:text-xl md:text-xl font-coco font-extrabold transition-all duration-300">
+  {title}
+</h3>
+
 
           {/* TAGS avec animation */}
           <AnimatePresence>
@@ -57,13 +57,23 @@ const HexagonCard = ({ image, title, category, tags, onSelect }: ProjectCardProp
             )}
           </AnimatePresence>
 
-          {/* BOUTON */}
-          <span
-            onClick={() => onSelect(category)}
-            className="mt-4 w-10 h-10 text-white rounded-full flex items-center justify-center bg-linear-to-r from-[#f2cc6a] to-[#f2a500] transition-transform duration-300 hover:scale-110"
-          >
-            <ArrowRight size={24} strokeWidth={3} />
-          </span>
+          <motion.span
+  onClick={() => onSelect(category)}
+  animate={{
+    scale: [1, 1.05, 1, 1.05, 1], // pulsation
+    rotate: [0, 2, -2, 2, -2, 0], // vibration
+  }}
+  transition={{
+    duration: 1.2,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="my-4 w-28 h-10 sm:w-28 sm:h-10 md:w-20 md:h-6 
+             text-white rounded-full flex items-center justify-center 
+             bg-linear-to-r from-[#f2cc6a] to-[#f2a500] cursor-pointer select-none shadow-lg"
+>
+  Voir plus
+</motion.span>
 
         </div>
       </div>

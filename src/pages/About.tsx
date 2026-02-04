@@ -8,7 +8,7 @@ const About = () => {
     });
   };
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20">
+    <div className="max-w-5xl mx-auto px-6 py-20">
       {/* TITRE */}
       <motion.div
         initial={{ y: 10, opacity: 0 }}

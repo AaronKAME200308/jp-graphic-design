@@ -16,12 +16,12 @@ const Main = () => {
                 <About/>
             </section>
 
-            <section id="Compétences">
-                <Skill />
-            </section>
-
             <section id="Projets">
                 <Projects />
+            </section>
+
+            <section id="Compétences">
+                <Skill />
             </section>
 
             <section id="Contact">

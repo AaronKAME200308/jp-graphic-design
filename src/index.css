@@ -201,6 +201,13 @@ textarea::placeholder{
   }
 }
 
+/* Sur mobile (écran <= 640px) */
+@media (max-width: 640px) {
+  .hex {
+    width: 330px;   /* nouvelle largeur */
+    height: 350px;  /* nouvelle hauteur */
+  }
+}
 
 /* Mobile : encore plus d’espace */
 @media (max-width: 768px) {

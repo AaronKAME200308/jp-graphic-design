@@ -15,7 +15,7 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-6 py-10">
       {/* HERO */}
       <div className="flex justify-center items-center text-center">
         <motion.div

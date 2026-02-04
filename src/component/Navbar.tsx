@@ -9,37 +9,41 @@ const links = [
   { label: "Contact", to: "/contact" },
 ];
 
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("Accueil");
 
- useEffect(() => {
-  const onScroll = () => {
-    const sections = document.querySelectorAll("section");
-    let current = "Home";
+  useEffect(() => {
+    const onScroll = () => {
+      const sections = document.querySelectorAll("section");
+      let current = "Home";
 
-    sections.forEach((section) => {
-      if (section.getBoundingClientRect().top <= 120) {
-        current = section.id;
-      }
-    });
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= 120) {
+          current = section.id;
+        }
+      });
 
-    setActive(current);
-  };
+      setActive(current);
+    };
 
-  window.addEventListener("scroll", onScroll);
-  return () => window.removeEventListener("scroll", onScroll);
-}, []);
-
-
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const scrollToSection = (id: string) => {
-    setActive(id);
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
+  setActive(id);
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.scrollIntoView({ behavior: "smooth" });
+
+  // 🔹 Fermer le menu mobile après un léger délai pour laisser le scroll se terminer
+  if (window.innerWidth < 768) { // uniquement mobile
+    setTimeout(() => setOpen(false), 2000); // 400ms correspond au scroll smooth
+  }
+};
+
 
   const linkClass = (id: string) =>
     `font-coco font-extrabold px-3 py-2 rounded-md transition-all ${active === id
@@ -117,4 +121,5 @@ const Navbar = () => {
     </header>
   );
 };
+
 export default Navbar;
