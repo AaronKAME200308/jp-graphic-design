@@ -39,9 +39,9 @@ const About = () => {
             </span>
             Je suis Jean Pascal, créateur d'identité visuelle et designer freelance.
             J'ai plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">2 ans d'expériences</span>, avec plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">200 projets</span> réalisés pour des clients et des entreprises.
-            Je travaille avec des clients de hauts niveau dans plus de deux pays à travers le monde.
-            J'accompagne également plusieurs personnes à générer leurs premiers revenu grâce aux compétences acquises dans mes formations.
-            Ajourd'hui, je cumule plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">100 abonnés</span> sur mes réseaux sociaux, notament TikTok et Instagram.
+            Je travaille avec des clients de haut niveau dans plus de deux pays à travers le monde.
+            J'accompagne également plusieurs personnes à générer leurs premiers revenus grâce aux compétences acquises dans mes formations.
+            Aujourd'hui, je cumule plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">100 abonnés</span> sur mes réseaux sociaux, notamment TikTok et Instagram.
           </p>
           <button onClick={() => scrollToSection("Projets")} className="inline-flex items-center gap-2 rounded-full px-7 py-3border-[#f2cc6a] text-black/60 bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90 font-medium shadow hover:scale-105 transition">
             Découvrir mes projets
