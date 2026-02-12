@@ -149,10 +149,11 @@ export default function Carousel({ active }: CarouselProps) {
               <div
                 className={
                   isMobile
-                    ? "flex h-full"
+                    ? "flex h-full overflow-hidden"
                     : "grid gap-2 h-full grid-cols-4 grid-rows-4"
                 }
               >
+
                 {currentSlideData?.items?.map((item) => (
                   <motion.div
                     key={item.id}
@@ -170,7 +171,7 @@ export default function Carousel({ active }: CarouselProps) {
                         setDirection(-1);
                         setCurrentSlide(
                           (safeIndex - 1 + CAROUSEL_SLIDES.length) %
-                            CAROUSEL_SLIDES.length,
+                          CAROUSEL_SLIDES.length,
                         );
                       }
                     }}
@@ -180,14 +181,18 @@ export default function Carousel({ active }: CarouselProps) {
                       borderColor: "white",
                       boxShadow: "0 25px 30px rgba(255,255,255,0.8)",
                     }}
-                    className="rounded-lg overflow-hidden group cursor-pointer w-full h-full"
+                    className={`
+  rounded-lg overflow-hidden group cursor-pointer h-full
+  ${isMobile ? "min-w-full" : "w-full"}
+`}
+
                     style={
                       isMobile
                         ? {}
                         : {
-                            gridColumn: `span ${item.colSpan}`,
-                            gridRow: `span ${item.rowSpan}`,
-                          }
+                          gridColumn: `span ${item.colSpan}`,
+                          gridRow: `span ${item.rowSpan}`,
+                        }
                     }
                   >
                     <div className="relative w-full h-full">
@@ -264,22 +269,22 @@ export default function Carousel({ active }: CarouselProps) {
             onClick={() => setActiveImage(null)}
           >
             <div className="relative">
-  {!modalLoaded && (
-    <div className="absolute inset-0 rounded-lg bg-gray-300 animate-pulse" />
-  )}
+              {!modalLoaded && (
+                <div className="absolute inset-0 rounded-lg bg-gray-300 animate-pulse" />
+              )}
 
-  <motion.img
-    src={activeImage}
-    alt="Preview"
-    onLoad={() => setModalLoaded(true)}
-    initial={{ scale: 0.9 }}
-    animate={{ scale: 1 }}
-    exit={{ scale: 0.9 }}
-    transition={{ duration: 0.3 }}
-    className={`max-w-[90vw] max-h-[90vh] object-contain rounded-lg transition-opacity duration-500
-      ${modalLoaded ? "opacity-100" : "opacity-0"}`}
-  />
-</div>
+              <motion.img
+                src={activeImage}
+                alt="Preview"
+                onLoad={() => setModalLoaded(true)}
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className={`max-w-[90vw] max-h-[90vh] object-contain rounded-lg transition-opacity duration-500
+                 ${modalLoaded ? "opacity-100" : "opacity-0"}`}
+              />
+            </div>
 
           </motion.div>
         )}

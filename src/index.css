@@ -29,12 +29,6 @@
 body {
   background: linear-gradient(135deg,#000000,#f2cc6a);
   color: white;
-  overflow-x: hidden;
-   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 
@@ -53,28 +47,11 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  padding: 0.6em 1.2em;  
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
 
-li button {
-  transition:
-    background-color 300ms ease,
-    color 300ms ease,
-    box-shadow 300ms ease,
-    transform 200ms ease;
-}
 
-li button:hover {
-  transform: translateY(-1px);
-}
 
-section {
-  scroll-margin-top: 90px;
-}
+
+
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

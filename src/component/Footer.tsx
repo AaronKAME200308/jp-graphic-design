@@ -23,8 +23,23 @@ const logos = [
 
 const Footer = () => {
   return (
-    <footer className="mt-auto">
-      <div className="py-6 text-center bg-linear-to-r from-black/80 via-black to-black/80 ">
+    <footer className="mt-auto w-full">
+  <div
+    className="
+      w-full
+      max-w-7xl
+      mx-auto
+      px-4
+      sm:px-6
+      md:px-8
+      lg:px-12
+      xl:px-16
+      py-6
+      text-center
+      bg-linear-to-r from-black/80 via-black to-black/80
+    "
+  >
+
        
 
         {/* Réseaux sociaux */}
