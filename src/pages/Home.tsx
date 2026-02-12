@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";  
 
-const heroVariants = {
+const heroVariants: Variants = {
   hidden: { opacity: 0, translateY: 20 },
   show: {
     opacity: 1,
@@ -12,7 +13,7 @@ const heroVariants = {
   },
 };
 
-const childVariants = {
+const childVariants: Variants = {
   hidden: { opacity: 0, translateY: 10 },
   show: { opacity: 1, translateY: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };

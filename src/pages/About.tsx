@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Sparkle } from "lucide-react";
+import type { Variants } from "framer-motion";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -9,7 +10,7 @@ const containerVariants = {
   },
 };
 
-const childVariants = {
+const childVariants: Variants = {
   hiddenLeft: { opacity: 0, translateX: -60 },
   hiddenRight: { opacity: 0, translateX: 60 },
   show: { opacity: 1, translateX: 0, transition: { duration: 0.8, ease: "easeOut" } },
