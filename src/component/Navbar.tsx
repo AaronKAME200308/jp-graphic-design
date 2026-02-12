@@ -101,11 +101,23 @@ const Navbar = () => {
 
         {/* MOBILE BUTTON */}
         <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-white bg-linear-to-r from-[#f2cc6a] to-white/80 p-2 rounded-md"
-        >
-          <span className="text-2xl">{open ? "✕" : "☰"}</span>
-        </button>
+  onClick={() => setOpen(!open)}
+  className="
+    md:hidden 
+    text-white 
+    bg-linear-to-r from-[#f2cc6a] to-white/80 
+    p-2 
+    rounded-md 
+    flex 
+    w-12
+    h-12
+    items-center 
+    justify-center
+  "
+>
+  <span className="text-2xl">{open ? "✕" : "☰"}</span>
+</button>
+
       </div>
 
       {/* MOBILE MENU */}

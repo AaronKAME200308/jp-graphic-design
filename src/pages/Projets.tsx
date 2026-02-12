@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import HexagonCard from "../component/ProjectCard";
 import type { ProjectProps } from "../component/ProjectCard";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Carousel from "../component/Carroussel";
 import { PanelsTopLeft, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -38,7 +38,7 @@ const Projects = () => {
   const [active, setActive] = useState("All");
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<HTMLButtonElement | null>(null);
-  const gridRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   // Centrage automatique du filtre actif
   useEffect(() => {
@@ -49,6 +49,22 @@ const Projects = () => {
       const itemCenter = item.offsetLeft + item.offsetWidth / 2;
       const scrollTo = itemCenter - containerCenter;
       container.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  }, [active]);
+
+  // Scroll vers le contenu APRÈS le render (solution au problème)
+  useEffect(() => {
+    if (active !== "All" && contentRef.current) {
+      // Petit délai pour laisser l'animation se terminer
+      const timer = setTimeout(() => {
+        contentRef.current?.scrollIntoView({ 
+          behavior: "smooth", 
+          block: "start",
+          inline: "nearest"
+        });
+      }, 100);
+      
+      return () => clearTimeout(timer);
     }
   }, [active]);
 
@@ -67,8 +83,7 @@ const Projects = () => {
 
   const handleSelect = (value: string) => {
     setActive(value);
-    // Scroll vers le top du grid pour éviter de cliquer trop bas et sauter
-    gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // ✅ Plus de scroll ici - géré par useEffect
   };
 
   return (
@@ -78,7 +93,7 @@ const Projects = () => {
       <motion.div
         initial={{ translateY: 10, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
-        className="mx-auto mb-12 w-fit px-3 py-2 border-2 border-[#f2cc6a] rounded-full text-2xl font-bold text-center bg-linear-to-r from-black via-black/80 to-black/60"
+        className="mx-auto mb-12 w-fit px-3 py-2 border-2 border-[#f2cc6a] rounded-full text-2xl font-bold text-center bg-gradient-to-r from-black via-black/80 to-black/60"
       >
         <div className="flex items-center gap-2">
           <PanelsTopLeft className="w-5 h-5 text-[#f2cc6a]" />
@@ -91,12 +106,13 @@ const Projects = () => {
         <div className="w-full flex items-center justify-center gap-2 mb-12 overflow-hidden relative">
 
           {/* FLÈCHE GAUCHE */}
-          <span
+          <button
             onClick={scrollLeft}
-            className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Défiler vers la gauche"
+            className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" strokeWidth={2} />
-          </span>
+          </button>
 
           {/* CONTENEUR SCROLL */}
           <motion.div
@@ -111,13 +127,15 @@ const Projects = () => {
                 key={f}
                 onClick={() => handleSelect(f)}
                 ref={active === f ? activeRef : null}
+                aria-label={`Filtrer par ${f}`}
+                aria-pressed={active === f}
                 className="shrink-0 relative"
               >
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   className={`px-4 py-1 rounded-full text-sm font-medium transition-all duration-300
                     ${active === f
-                      ? "bg-linear-to-r from-[#f2cc6a] to-white/90 text-black shadow-[0_0_15px_rgba(242,204,106,0.4)]"
+                      ? "bg-gradient-to-r from-[#f2cc6a] to-white/90 text-black shadow-[0_0_15px_rgba(242,204,106,0.4)]"
                       : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
                     }`}
                 >
@@ -135,63 +153,66 @@ const Projects = () => {
           </motion.div>
 
           {/* FLÈCHE DROITE */}
-          <span
+          <button
             onClick={scrollRight}
-            className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Défiler vers la droite"
+            className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" strokeWidth={2} />
-          </span>
+          </button>
         </div>
       )}
 
-      {/* GRID */}
-      <div className="flex flex-wrap justify-center" ref={gridRef}>
-        {active === "All" && (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0, translateY: 30 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            exit={{ opacity: 0, translateY: -30 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="flex flex-wrap justify-center gap-x-3"
-          >
-            {/* ROW 1 */}
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
-              {filterProjects(projects.first).map((project, i: number) => (
-                <HexagonCard
-                  key={`first-${i}`}
-                  {...project}
-                  onSelect={handleSelect}
-                />
-              ))}
-            </div>
+      {/* GRID / CAROUSEL - avec ref pour le scroll */}
+      <div ref={contentRef} className="flex flex-wrap justify-center">
+        <AnimatePresence mode="wait">
+          {active === "All" && (
+            <motion.div
+              key="grid"
+              initial={{ opacity: 0, translateY: 30 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              exit={{ opacity: 0, translateY: -30 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="flex flex-wrap justify-center gap-x-3"
+            >
+              {/* ROW 1 */}
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
+                {filterProjects(projects.first).map((project, i: number) => (
+                  <HexagonCard
+                    key={`first-${i}`}
+                    {...project}
+                    onSelect={handleSelect}
+                  />
+                ))}
+              </div>
 
-            {/* ROW 2 */}
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 mt-4 md:-mt-10">
-              {filterProjects(projects.second).map((project, i: number) => (
-                <HexagonCard
-                  key={`second-${i}`}
-                  {...project}
-                  onSelect={handleSelect}
-                />
-              ))}
-            </div>
-          </motion.div>
-        )}
+              {/* ROW 2 */}
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 mt-4 md:-mt-10">
+                {filterProjects(projects.second).map((project, i: number) => (
+                  <HexagonCard
+                    key={`second-${i}`}
+                    {...project}
+                    onSelect={handleSelect}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {/* CARROUSEL APRÈS FILTRE */}
-        {active !== "All" && (
-          <motion.div
-            key="carousel"
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-            className="w-full"
-          >
-            <Carousel active={active} />
-          </motion.div>
-        )}
+          {/* CARROUSEL APRÈS FILTRE */}
+          {active !== "All" && (
+            <motion.div
+              key="carousel"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="w-full"
+            >
+              <Carousel active={active} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
