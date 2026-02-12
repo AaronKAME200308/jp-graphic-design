@@ -1,30 +1,28 @@
 import { motion } from "framer-motion";
 import { Sparkle } from "lucide-react";
 
-const About = () => {
-    const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-  return (
-    <div
-  className="
-    w-full
-    max-w-7xl
-    mx-auto
-    px-4
-    sm:px-6
-    md:px-8
-    lg:px-12
-    xl:px-16
-    py-12
-    sm:py-14
-    md:py-16
-    overflow-hidden
-  "
->
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, ease: "easeOut" },
+  },
+};
 
+const childVariants = {
+  hiddenLeft: { opacity: 0, translateX: -60 },
+  hiddenRight: { opacity: 0, translateX: 60 },
+  show: { opacity: 1, translateX: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+const About = () => {
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
+      
       {/* TITRE */}
       <motion.div
         initial={{ y: 10, opacity: 0 }}
@@ -38,18 +36,21 @@ const About = () => {
       </motion.div>
 
       {/* GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
+      >
         {/* BLOC TEXTE */}
         <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          variants={childVariants}
+          initial="hiddenLeft"
+          whileInView="show"
           viewport={{ once: true }}
           className="space-y-6"
         >
-          <p className=" text-white leading-relaxed">
+          <p className="text-white leading-relaxed">
             <span className="float-left mr-1 text-6xl font-coco font-extrabold bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90 leading-none">
               Hello
             </span>
@@ -59,40 +60,41 @@ const About = () => {
             J'accompagne également plusieurs personnes à générer leurs premiers revenus grâce aux compétences acquises dans mes formations.
             Aujourd'hui, je cumule plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">100 abonnés</span> sur mes réseaux sociaux, notamment TikTok et Instagram.
           </p>
-          <button onClick={() => scrollToSection("Projets")} className="inline-flex items-center gap-2 rounded-full px-7 py-3border-[#f2cc6a] text-black/60 bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90 font-medium shadow hover:scale-105 transition">
+          <button
+            onClick={() => scrollToSection("Projets")}
+            className="inline-flex items-center gap-2 rounded-full px-7 py-3 border border-[#f2cc6a] text-black/60 bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90 font-medium shadow hover:scale-105 transition-transform duration-300"
+          >
             Découvrir mes projets
           </button>
         </motion.div>
 
         {/* VISUEL */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          variants={childVariants}
+          initial="hiddenRight"
+          whileInView="show"
           viewport={{ once: true }}
           className="relative flex justify-center"
         >
-          
           <div className="relative w-[320px] md:w-90 aspect-square">
-            {/*Arc */}
+            {/* Arc */}
             <div className="absolute -left-10 bottom-[-10%] w-[80%] h-[80%] bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90 rounded-[58%_42%_45%_55%/55%_45%_55%_45%] z-0"/>
-              
+
+            {/* Image flottante */}
             <motion.div
-              animate={{y:[0,-10,0]}}
-              transition={{duration:6, repeat:Infinity,ease:"easeInOut"}}
-              className="relative z-10 w-full h-full overflow-hidden rounded-[58%_42%_45%_55%/55%_45%_55%_45%]"              
+              animate={{ translateY: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10 w-full h-full overflow-hidden rounded-[58%_42%_45%_55%/55%_45%_55%_45%]"
             >
               <img
                 src="jpstand.png"
                 alt="About"
                 className="w-110 h-110 object-contain"
               />
-
             </motion.div>
-            {/* */}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 };

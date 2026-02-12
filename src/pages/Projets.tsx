@@ -38,6 +38,7 @@ const Projects = () => {
   const [active, setActive] = useState("All");
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<HTMLButtonElement | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
 
   // Centrage automatique du filtre actif
   useEffect(() => {
@@ -52,13 +53,11 @@ const Projects = () => {
   }, [active]);
 
   const scrollLeft = () => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
   };
 
   const scrollRight = () => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: 200, behavior: "smooth" });
   };
 
   const filterProjects = (list: ProjectProps[]): ProjectProps[] => {
@@ -66,29 +65,19 @@ const Projects = () => {
     return list.filter((p: { category: string }) => p.category === active);
   };
 
-  return (
-    <div
-  className="
-    w-full
-    max-w-7xl
-    mx-auto
-    px-4
-    sm:px-6
-    md:px-8
-    lg:px-12
-    xl:px-16
-    py-12
-    sm:py-14
-    md:py-16
-    overflow-hidden
-  "
->
+  const handleSelect = (value: string) => {
+    setActive(value);
+    // Scroll vers le top du grid pour éviter de cliquer trop bas et sauter
+    gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
+  return (
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
 
       {/* TITRE */}
       <motion.div
-        initial={{ y: 10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        initial={{ translateY: 10, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
         className="mx-auto mb-12 w-fit px-3 py-2 border-2 border-[#f2cc6a] rounded-full text-2xl font-bold text-center bg-linear-to-r from-black via-black/80 to-black/60"
       >
         <div className="flex items-center gap-2">
@@ -112,15 +101,15 @@ const Projects = () => {
           {/* CONTENEUR SCROLL */}
           <motion.div
             ref={scrollRef}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, translateY: -10 }}
+            animate={{ opacity: 1, translateY: 0 }}
             transition={{ duration: 0.3 }}
             className="relative flex gap-2 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
           >
             {filters.map((f) => (
               <button
                 key={f}
-                onClick={() => setActive(f)}
+                onClick={() => handleSelect(f)}
                 ref={active === f ? activeRef : null}
                 className="shrink-0 relative"
               >
@@ -133,8 +122,6 @@ const Projects = () => {
                     }`}
                 >
                   {f}
-
-                  {/* TRAIT D'OR SOUS LE BOUTON ACTIF */}
                   {active === f && (
                     <motion.span
                       layoutId="active-filter-underline"
@@ -154,18 +141,17 @@ const Projects = () => {
           >
             <ChevronRight className="w-5 h-5" strokeWidth={2} />
           </span>
-
         </div>
       )}
 
       {/* GRID */}
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center" ref={gridRef}>
         {active === "All" && (
           <motion.div
             key="grid"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, translateY: 30 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -30 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="flex flex-wrap justify-center gap-x-3"
           >
@@ -175,7 +161,7 @@ const Projects = () => {
                 <HexagonCard
                   key={`first-${i}`}
                   {...project}
-                  onSelect={(value) => setActive(value)}
+                  onSelect={handleSelect}
                 />
               ))}
             </div>
@@ -186,7 +172,7 @@ const Projects = () => {
                 <HexagonCard
                   key={`second-${i}`}
                   {...project}
-                  onSelect={(value) => setActive(value)}
+                  onSelect={handleSelect}
                 />
               ))}
             </div>
