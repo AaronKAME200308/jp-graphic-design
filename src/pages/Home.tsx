@@ -53,7 +53,7 @@ const Home = () => {
             variants={childVariants}
             className="font-coco font-extralight italic mt-5 text-lg text-white/85 mb-1"
           >
-            Créateur d'identité visuel - Designer
+            Créateur d'identité visuelle - Designer
           </motion.p>
 
           {/* IMAGE */}
