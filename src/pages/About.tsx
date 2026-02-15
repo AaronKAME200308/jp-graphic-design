@@ -56,10 +56,11 @@ const About = () => {
               Hello
             </span>
             Je suis Jean Pascal, créateur d'identité visuelle et designer freelance.
-            J'ai plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">2 ans d'expériences</span>, avec plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">200 projets</span> réalisés pour des clients et des entreprises.
-            Je travaille avec des clients de haut niveau dans plus de deux pays à travers le monde.
-            J'accompagne également plusieurs personnes à générer leurs premiers revenus grâce aux compétences acquises dans mes formations.
-            Aujourd'hui, je cumule plus de <span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90">100 abonnés</span> sur mes réseaux sociaux, notamment TikTok et Instagram.
+            Depuis plus de<span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90"> 2 ans</span>, j’accompagne des entrepreneurs, marques et entreprises dans la construction d’une image forte, cohérente et mémorable.
+            À ce jour, j’ai réalisé plus de<span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90"> 200 projets</span>  en collaborant avec des structures et porteurs de projets venant de plusieurs pays à travers le monde.
+            Mon approche va au-delà de l’esthétique, je conçois des identités visuelles pensées pour impacter, positionner et différencier. 
+            J'accompagne également plusieurs personnes à générer leurs premiers revenus grâce aux compétences acquises dans mes formations. 
+            Aujourd'hui, je cumule plus de<span className="bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] via-[#f2cc6a] to-white/90"> 100 abonnés</span> sur mes réseaux sociaux, notamment TikTok et Instagram.
           </p>
           <button
             onClick={() => scrollToSection("Projets")}
