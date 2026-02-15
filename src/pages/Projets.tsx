@@ -38,7 +38,6 @@ const Projects = () => {
   const [active, setActive] = useState("All");
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<HTMLButtonElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
 
   // Centrage automatique du filtre actif
   useEffect(() => {
@@ -52,21 +51,26 @@ const Projects = () => {
     }
   }, [active]);
 
-  // Scroll vers le contenu APRÈS le render (solution au problème)
-  useEffect(() => {
-    if (active !== "All" && contentRef.current) {
-      // Petit délai pour laisser l'animation se terminer
-      const timer = setTimeout(() => {
-        contentRef.current?.scrollIntoView({ 
+// Remplacez le useEffect de scroll (lignes 47-60) par celui-ci :
+
+useEffect(() => {
+  if (active !== "All") {
+    // Petit délai pour laisser l'animation se terminer
+    const timer = setTimeout(() => {
+      // Scroll vers le début de la section (#Projets) au lieu du contenu
+      const section = document.getElementById("Projets");
+      if (section) {
+        section.scrollIntoView({ 
           behavior: "smooth", 
           block: "start",
           inline: "nearest"
         });
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [active]);
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }
+}, [active]);
 
   const scrollLeft = () => {
     scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
@@ -87,7 +91,7 @@ const Projects = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
+    <section id="Projets" className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
 
       {/* TITRE */}
       <motion.div
@@ -164,7 +168,6 @@ const Projects = () => {
       )}
 
       {/* GRID / CAROUSEL - avec ref pour le scroll */}
-      <div ref={contentRef} className="flex flex-wrap justify-center">
         <AnimatePresence mode="wait">
           {active === "All" && (
             <motion.div
@@ -213,8 +216,7 @@ const Projects = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </div>
+    </section>
   );
 };
 

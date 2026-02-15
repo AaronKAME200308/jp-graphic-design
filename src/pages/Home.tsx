@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
+    <section id="Accueil" className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
 
       {/* HERO */}
       <div className="flex justify-center items-center text-center">
@@ -99,7 +99,7 @@ const Home = () => {
           </motion.div>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

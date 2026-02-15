@@ -22,7 +22,7 @@ const About = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
+    <section id="A propos" className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
       
       {/* TITRE */}
       <motion.div
@@ -96,7 +96,7 @@ const About = () => {
           </div>
         </motion.div>
       </motion.div>
-    </div>
+    </section>
   );
 };
 

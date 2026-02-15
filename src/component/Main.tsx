@@ -8,25 +8,17 @@ import About from "../pages/About";
 const Main = () => {
     return (
         <main>
-            <section id="Accueil">
+            
                 <Home />
-            </section>
 
-            <section id="A propos">
+            
                 <About/>
-            </section>
 
-            <section id="Projets">
                 <Projects />
-            </section>
 
-            <section id="Compétences">
                 <Skill />
-            </section>
 
-            <section id="Contact">
                 <Contact />
-            </section>
             <BackToTop />
         </main>
     );

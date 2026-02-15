@@ -286,7 +286,7 @@ export default function Carousel({ active }: CarouselProps) {
 
       {/* INDICATEUR DE SWIPE MOBILE */}
       {isMobile && CAROUSEL_SLIDES.length > 1 && (
-        <div className="sm:hidden text-center text-gray-600 text-xs mt-2">
+        <div className="sm:hidden text-center text-white text-xs mt-2">
           ← Glissez pour naviguer →
         </div>
       )}
@@ -323,7 +323,7 @@ export default function Carousel({ active }: CarouselProps) {
 
       {/* COMPTEUR DESKTOP */}
       {!isMobile && CAROUSEL_SLIDES.length > 1 && (
-        <div className="hidden sm:block text-center text-gray-600 text-sm mt-4">
+        <div className="hidden sm:block text-center text-white text-sm mt-4">
           {safeIndex + 1} / {CAROUSEL_SLIDES.length}
         </div>
       )}

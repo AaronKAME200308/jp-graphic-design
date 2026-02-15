@@ -32,10 +32,10 @@ export default function Contact() {
 
 
   return (
-    <div
+    <section id="Contact"
   className="
     w-full
-    max-w-7xl
+    max-w-full
     mx-auto
     px-4
     sm:px-6
@@ -205,6 +205,6 @@ export default function Contact() {
         </motion.div>
 
       </div>
-    </div>
+    </section>
   )
 }
