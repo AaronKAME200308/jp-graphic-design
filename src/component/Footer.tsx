@@ -74,11 +74,11 @@ const Footer = () => {
 
         {/* Copyright */}
         <p className="text-xm opacity-95 text-white">
-          © {new Date().getFullYear()} Olinga Njoya Jean Pascal — Tous droits réservés.
+          © {new Date().getFullYear()} JP Graphic design — Tous droits réservés.
         </p>
 
     <div className="mt-6 font-coco font-extrabold">
-          <span> Nos Collaborations</span>
+          <span>Collaborations</span>
         </div>
          {/* LOGOS DÉROULANTS */}
       <div className="mt-2 overflow-hidden py-2 bg-white">
