@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";  
+import type { Variants } from "framer-motion";
+import { useLang } from "../context/LanguageContext";
 
 const heroVariants: Variants = {
   hidden: { opacity: 0, translateY: 20 },
   show: {
     opacity: 1,
     translateY: 0,
-    transition: {
-      staggerChildren: 0.15,
-      ease: "easeOut",
-    },
+    transition: { staggerChildren: 0.15, ease: "easeOut" },
   },
 };
 
@@ -21,17 +19,18 @@ const childVariants: Variants = {
 const buttonHover = { scale: 1.03 };
 
 const Home = () => {
+  const { t } = useLang();
+
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section id="Accueil" className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
-
-      {/* HERO */}
-      <div className="flex justify-center items-center text-center">
+    <section
+      id={t("Accueil", "Home")}
+      className="relative w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden"
+    >
+      <div className="relative z-10 flex justify-center items-center text-center">
         <motion.div
           initial="hidden"
           animate="show"
@@ -41,7 +40,7 @@ const Home = () => {
           {/* TITRE */}
           <motion.h2 variants={childVariants} className="text-5xl leading-tight mb-4">
             <span className="block font-coco font-extralight bg-clip-text text-transparent bg-linear-to-r from-[#f2cc6a] to-white/90">
-              Bienvenue Chez
+              {t("Bienvenue Chez", "Welcome to")}
             </span>
             <span style={{ transform: "skewY(-2deg)" }} className="block p-1 bg-linear-to-r from-[#f2cc6a] to-white/90">
               <p className="font-coco font-extrabold text-black/90">JP GRAPHIC DESIGN</p>
@@ -53,7 +52,7 @@ const Home = () => {
             variants={childVariants}
             className="font-coco font-extralight italic mt-5 text-lg text-white/85 mb-1"
           >
-            Créateur d'identité visuel - Designer
+            {t("Créateur d'identité visuelle - Designer", "Visual Identity Creator - Designer")}
           </motion.p>
 
           {/* IMAGE */}
@@ -67,7 +66,6 @@ const Home = () => {
               transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" }}
               className="absolute inset-0 rounded-full pointer-events-none blur-2xl"
             />
-
             <motion.img
               animate={{ translateY: [0, -10, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -79,21 +77,20 @@ const Home = () => {
 
           {/* BOUTONS */}
           <motion.div variants={childVariants} className="flex justify-center gap-4 flex-wrap">
-            <button onClick={() => scrollToSection("Projets")}>
+            <button onClick={() => scrollToSection(t("Projets", "Projects"))}>
               <motion.div
                 whileHover={buttonHover}
                 className="font-coco font-extrabold px-6 py-3 rounded-full bg-linear-to-r from-[#f2cc6a] to-white/90 text-black/60 shadow-lg"
               >
-                Voir mes projets
+                {t("Voir mes projets", "View my projects")}
               </motion.div>
             </button>
-
             <button onClick={() => scrollToSection("Contact")}>
               <motion.div
                 whileHover={buttonHover}
                 className="font-coco font-extrabold px-6 py-3 rounded-full border border-white/30 text-white/85"
               >
-                Me contacter
+                {t("Me contacter", "Contact me")}
               </motion.div>
             </button>
           </motion.div>

@@ -42,15 +42,17 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "32", colSpan: 1, rowSpan: 2, image: "/bt34.jpeg", filter: "Event Posters" },
 
     // Concert (33-41)
-    { id: "33", colSpan: 2, rowSpan: 4, image: "/ac.jpeg", filter: "Concert" },
+    { id: "33", colSpan: 2, rowSpan: 4, image: "/ac2.jpeg", filter: "Concert" },    
     { id: "34", colSpan: 2, rowSpan: 2, image: "/ac1.jpeg", filter: "Concert" },
-    { id: "35", colSpan: 2, rowSpan: 2, image: "/ac4.jpeg", filter: "Concert" },
+    { id: "35", colSpan: 2, rowSpan: 2, image: "/bt9.jpeg", filter: "Concert" },
     { id: "36", colSpan: 2, rowSpan: 4, image: "/ac9.jpeg", filter: "Concert" },
     { id: "37", colSpan: 1, rowSpan: 2, image: "/ac3.jpeg", filter: "Concert" },
     { id: "38", colSpan: 2, rowSpan: 2, image: "/ac5.jpeg", filter: "Concert" },
-    { id: "39", colSpan: 2, rowSpan: 4, image: "/bt9.jpeg", filter: "Concert" },
+    { id: "39", colSpan: 2, rowSpan: 4, image: "/ac4.jpeg", filter: "Concert" },
     { id: "40", colSpan: 2, rowSpan: 2, image: "/ac6.jpeg", filter: "Concert" },
     { id: "41", colSpan: 1, rowSpan: 2, image: "/ac7.jpeg", filter: "Concert" },
+    { id: "181", colSpan: 2, rowSpan: 4, image: "/ac.jpeg", filter: "Concert" },    
+
 
     // Identité visuel (42-60)
     { id: "42", colSpan: 2, rowSpan: 2, image: "/idv25.jpeg", filter: "Identité visuel" },

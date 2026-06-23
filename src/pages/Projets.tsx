@@ -4,6 +4,7 @@ import type { ProjectProps } from "../component/ProjectCard";
 import { motion, AnimatePresence } from "framer-motion";
 import Carousel from "../component/Carroussel";
 import { PanelsTopLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { useLang } from "../context/LanguageContext";
 
 const filters = [
   "All",
@@ -35,64 +36,46 @@ const projects = {
 };
 
 const Projects = () => {
+  const { t } = useLang();
   const [active, setActive] = useState("All");
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<HTMLButtonElement | null>(null);
 
-  // Centrage automatique du filtre actif
   useEffect(() => {
     if (activeRef.current && scrollRef.current) {
       const container = scrollRef.current;
       const item = activeRef.current;
       const containerCenter = container.offsetWidth / 2;
       const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-      const scrollTo = itemCenter - containerCenter;
-      container.scrollTo({ left: scrollTo, behavior: "smooth" });
+      container.scrollTo({ left: itemCenter - containerCenter, behavior: "smooth" });
     }
   }, [active]);
 
-// Remplacez le useEffect de scroll (lignes 47-60) par celui-ci :
+  useEffect(() => {
+    if (active !== "All") {
+      const timer = setTimeout(() => {
+        const section = document.getElementById(t("Projets", "Projects"));
+        if (section) section.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [active]);
 
-useEffect(() => {
-  if (active !== "All") {
-    // Petit délai pour laisser l'animation se terminer
-    const timer = setTimeout(() => {
-      // Scroll vers le début de la section (#Projets) au lieu du contenu
-      const section = document.getElementById("Projets");
-      if (section) {
-        section.scrollIntoView({ 
-          behavior: "smooth", 
-          block: "start",
-          inline: "nearest"
-        });
-      }
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }
-}, [active]);
-
-  const scrollLeft = () => {
-    scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
-  };
-
-  const scrollRight = () => {
-    scrollRef.current?.scrollBy({ left: 200, behavior: "smooth" });
-  };
+  const scrollLeft = () => scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
+  const scrollRight = () => scrollRef.current?.scrollBy({ left: 200, behavior: "smooth" });
 
   const filterProjects = (list: ProjectProps[]): ProjectProps[] => {
     if (active === "All") return list;
-    return list.filter((p: { category: string }) => p.category === active);
+    return list.filter((p) => p.category === active);
   };
 
-  const handleSelect = (value: string) => {
-    setActive(value);
-    // ✅ Plus de scroll ici - géré par useEffect
-  };
+  const handleSelect = (value: string) => setActive(value);
 
   return (
-    <section id="Projets" className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
-
+    <section
+      id={t("Projets", "Projects")}
+      className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden"
+    >
       {/* TITRE */}
       <motion.div
         initial={{ translateY: 10, opacity: 0 }}
@@ -101,24 +84,17 @@ useEffect(() => {
       >
         <div className="flex items-center gap-2">
           <PanelsTopLeft className="w-5 h-5 text-[#f2cc6a]" />
-          <span className="font-coco font-extrabold">Projets</span>
+          <span className="font-coco font-extrabold">{t("Projets", "Projects")}</span>
         </div>
       </motion.div>
 
       {/* FILTERS */}
       {active !== "All" && (
         <div className="w-full flex items-center justify-center gap-2 mb-12 overflow-hidden relative">
-
-          {/* FLÈCHE GAUCHE */}
-          <button
-            onClick={scrollLeft}
-            aria-label="Défiler vers la gauche"
-            className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer"
-          >
+          <button onClick={scrollLeft} aria-label="Left" className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer">
             <ChevronLeft className="w-5 h-5" strokeWidth={2} />
           </button>
 
-          {/* CONTENEUR SCROLL */}
           <motion.div
             ref={scrollRef}
             initial={{ opacity: 0, translateY: -10 }}
@@ -131,17 +107,15 @@ useEffect(() => {
                 key={f}
                 onClick={() => handleSelect(f)}
                 ref={active === f ? activeRef : null}
-                aria-label={`Filtrer par ${f}`}
                 aria-pressed={active === f}
                 className="shrink-0 relative"
               >
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className={`px-4 py-1 rounded-full text-sm font-medium transition-all duration-300
-                    ${active === f
-                      ? "bg-gradient-to-r from-[#f2cc6a] to-white/90 text-black shadow-[0_0_15px_rgba(242,204,106,0.4)]"
-                      : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
-                    }`}
+                  className={`px-4 py-1 rounded-full text-sm font-medium transition-all duration-300 ${active === f
+                    ? "bg-gradient-to-r from-[#f2cc6a] to-white/90 text-black shadow-[0_0_15px_rgba(242,204,106,0.4)]"
+                    : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+                  }`}
                 >
                   {f}
                   {active === f && (
@@ -156,66 +130,49 @@ useEffect(() => {
             ))}
           </motion.div>
 
-          {/* FLÈCHE DROITE */}
-          <button
-            onClick={scrollRight}
-            aria-label="Défiler vers la droite"
-            className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer"
-          >
+          <button onClick={scrollRight} aria-label="Right" className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] text-white shadow-lg hover:scale-110 transition-transform cursor-pointer">
             <ChevronRight className="w-5 h-5" strokeWidth={2} />
           </button>
         </div>
       )}
 
-      {/* GRID / CAROUSEL - avec ref pour le scroll */}
-        <AnimatePresence mode="wait">
-          {active === "All" && (
-            <motion.div
-              key="grid"
-              initial={{ opacity: 0, translateY: 30 }}
-              animate={{ opacity: 1, translateY: 0 }}
-              exit={{ opacity: 0, translateY: -30 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="flex flex-wrap justify-center gap-x-3"
-            >
-              {/* ROW 1 */}
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
-                {filterProjects(projects.first).map((project, i: number) => (
-                  <HexagonCard
-                    key={`first-${i}`}
-                    {...project}
-                    onSelect={handleSelect}
-                  />
-                ))}
-              </div>
+      {/* GRID / CAROUSEL */}
+      <AnimatePresence mode="wait">
+        {active === "All" && (
+          <motion.div
+            key="grid"
+            initial={{ opacity: 0, translateY: 30 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -30 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="flex flex-wrap justify-center gap-x-3"
+          >
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
+              {filterProjects(projects.first).map((project, i) => (
+                <HexagonCard key={`first-${i}`} {...project} onSelect={handleSelect} />
+              ))}
+            </div>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 mt-4 md:-mt-10">
+              {filterProjects(projects.second).map((project, i) => (
+                <HexagonCard key={`second-${i}`} {...project} onSelect={handleSelect} />
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-              {/* ROW 2 */}
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 mt-4 md:-mt-10">
-                {filterProjects(projects.second).map((project, i: number) => (
-                  <HexagonCard
-                    key={`second-${i}`}
-                    {...project}
-                    onSelect={handleSelect}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {/* CARROUSEL APRÈS FILTRE */}
-          {active !== "All" && (
-            <motion.div
-              key="carousel"
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
-              className="w-full"
-            >
-              <Carousel active={active} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {active !== "All" && (
+          <motion.div
+            key="carousel"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="w-full"
+          >
+            <Carousel active={active} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

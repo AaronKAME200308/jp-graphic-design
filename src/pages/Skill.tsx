@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import CircularProgress from "../component/CircleProgress";
 import { Sparkle } from "lucide-react";
+import { useLang } from "../context/LanguageContext";
 
 const logos = [
   { Icon: "/photoshop-svgrepo-com.svg", percent: 100, name: "Photoshop" },
@@ -14,11 +15,7 @@ const logos = [
 
 const containerVariants = {
   hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+  show: { transition: { staggerChildren: 0.15 } },
 };
 
 const itemVariants = {
@@ -27,10 +24,14 @@ const itemVariants = {
 };
 
 const Skill = () => {
+  const { t } = useLang();
   const [startProgress, setStartProgress] = useState(false);
 
   return (
-    <section id="Compétences" className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
+    <section
+      id={t("Compétences", "Skills")}
+      className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden"
+    >
       {/* TITRE */}
       <motion.div
         initial={{ y: 10, opacity: 0 }}
@@ -40,7 +41,7 @@ const Skill = () => {
       >
         <div className="flex items-center gap-2">
           <Sparkle className="w-5 h-5 text-[#f2cc6a]/90" />
-          <span className="font-coco font-extrabold">Compétences</span>
+          <span className="font-coco font-extrabold">{t("Compétences", "Skills")}</span>
         </div>
       </motion.div>
 
@@ -54,33 +55,12 @@ const Skill = () => {
         className="grid grid-cols-2 sm:grid-cols-3 gap-10 place-items-center"
       >
         {logos.map(({ Icon, percent, name }, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            className="flex flex-col items-center gap-4"
-          >
-            {/* LOGO */}
-            <div
-              className="
-                flex flex-col items-center
-                mb-5 w-16 h-16
-                text-white/70
-                hover:text-[#f2cc6a]
-                transition
-                hover:scale-110
-                hover:drop-shadow-[0_0_12px_rgba(242,204,106,0.8)]
-              "
-            >
+          <motion.div key={index} variants={itemVariants} className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center mb-5 w-16 h-16 text-white/70 hover:text-[#f2cc6a] transition hover:scale-110 hover:drop-shadow-[0_0_12px_rgba(242,204,106,0.8)]">
               <img src={Icon} alt={name} />
               <span className="text-sm mt-1">{name}</span>
             </div>
-
-            {/* CERCLE */}
-            <CircularProgress
-              percentage={percent}
-              size={90}
-              start={startProgress}
-            />
+            <CircularProgress percentage={percent} size={90} start={startProgress} />
           </motion.div>
         ))}
       </motion.div>
