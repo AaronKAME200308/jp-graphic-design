@@ -223,9 +223,19 @@ const FileUpload = ({ label, files, onChange, onRemove }: {
 };
 
 // ─── WhatsApp success modal ──────────────────────────────────────────────────────
-const SuccessModal = ({ nom, onClose, t }: { nom: string; onClose: () => void; t: (fr: string, en: string) => string }) => {
+const SuccessModal = ({
+  nom, onClose, t, isReturning, previousCount,
+}: {
+  nom: string;
+  onClose: () => void;
+  t: (fr: string, en: string) => string;
+  isReturning: boolean;
+  previousCount: number;
+}) => {
   const waMessage = encodeURIComponent(
-    `Bonjour JP ! Je viens de passer une commande sur votre site. Mon nom : ${nom}`
+    isReturning
+      ? `Bonjour JP ! Je viens de passer une nouvelle commande sur votre site. Mon nom : ${nom} (commande n°${previousCount + 1})`
+      : `Bonjour JP ! Je viens de passer une commande sur votre site. Mon nom : ${nom}`
   );
   const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
 
@@ -245,24 +255,47 @@ const SuccessModal = ({ nom, onClose, t }: { nom: string; onClose: () => void; t
         onClick={(e) => e.stopPropagation()}
         className="bg-gradient-to-br from-black via-black/95 to-black/90 border border-[#f2cc6a]/40 rounded-3xl p-8 max-w-md w-full text-center shadow-2xl"
       >
-        {/* Icône animée */}
+        {/* Icône animée — différente selon nouveau/ancien client */}
         <motion.div
           initial={{ scale: 0, rotate: -20 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ delay: 0.15, type: "spring", stiffness: 260, damping: 18 }}
           className="w-20 h-20 rounded-full bg-gradient-to-br from-[#f2cc6a] to-[#f2a500] flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#f2cc6a]/30"
         >
-          <span className="text-4xl">🎉</span>
+          <span className="text-4xl">{isReturning ? "👑" : "🎉"}</span>
         </motion.div>
 
+        {/* Badge client fidèle */}
+        {isReturning && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f2cc6a]/20 border border-[#f2cc6a]/50 mb-4"
+          >
+            <span className="text-[#f2cc6a] text-xs font-coco font-extrabold">
+              {t(`✦ Client fidèle — ${previousCount + 1}ᵉ commande`, `✦ Loyal client — order #${previousCount + 1}`)}
+            </span>
+          </motion.div>
+        )}
+
         <h2 className="font-coco font-extrabold text-2xl text-white mb-2">
-          {t("Commande envoyée !", "Order sent!")}
+          {isReturning
+            ? t(`Ravi de vous revoir, ${nom} !`, `Welcome back, ${nom}!`)
+            : t("Commande envoyée !", "Order sent!")
+          }
         </h2>
         <p className="text-white/60 text-sm mb-6">
-          {t(
-            `Merci ${nom} ! Vos informations et fichiers ont bien été enregistrés.`,
-            `Thank you ${nom}! Your information and files have been saved.`
-          )}
+          {isReturning
+            ? t(
+                `Votre ${previousCount + 1}ᵉ commande a bien été enregistrée. Merci pour votre fidélité !`,
+                `Your order #${previousCount + 1} has been saved. Thank you for your loyalty!`
+              )
+            : t(
+                `Merci ${nom} ! Vos informations et fichiers ont bien été enregistrés.`,
+                `Thank you ${nom}! Your information and files have been saved.`
+              )
+          }
         </p>
 
         {/* Encadré WhatsApp */}
@@ -274,10 +307,16 @@ const SuccessModal = ({ nom, onClose, t }: { nom: string; onClose: () => void; t
             </span>
           </div>
           <p className="text-white/80 text-sm leading-relaxed">
-            {t(
-              "Contactez JP Graphic Design sur WhatsApp pour confirmer votre commande et démarrer votre projet !",
-              "Contact JP Graphic Design on WhatsApp to confirm your order and start your project!"
-            )}
+            {isReturning
+              ? t(
+                  "Contactez JP sur WhatsApp pour confirmer cette nouvelle commande. Il saura que c'est vous !",
+                  "Contact JP on WhatsApp to confirm this new order. He'll know it's you!"
+                )
+              : t(
+                  "Contactez JP Graphic Design sur WhatsApp pour confirmer votre commande et démarrer votre projet !",
+                  "Contact JP Graphic Design on WhatsApp to confirm your order and start your project!"
+                )
+            }
           </p>
           <div className="flex items-center justify-center gap-2 mt-3 text-white/50 text-xs">
             <Phone size={12} />
@@ -318,6 +357,8 @@ export default function Commande() {
   const [couleurAutreVal, setCouleurAutreVal] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isReturning, setIsReturning] = useState(false);
+  const [previousCount, setPreviousCount] = useState(0);
   const [error, setError] = useState("");
 
   const set = (field: keyof FormData, value: unknown) =>
@@ -334,6 +375,17 @@ export default function Commande() {
     setError("");
 
     try {
+      // 0. Vérifier si le client existe déjà (via contact)
+      const { data: existing } = await supabase
+        .from("commandes")
+        .select("id")
+        .eq("contact", form.contact.trim());
+
+      const returning = !!(existing && existing.length > 0);
+      const prevCount = existing ? existing.length : 0;
+      setIsReturning(returning);
+      setPreviousCount(prevCount);
+
       // Slug du nom : "Jean Pascal Mouele" → "jean-pascal-mouele"
       const nomSlug = form.nom.trim()
         .toLowerCase()
@@ -422,7 +474,7 @@ export default function Commande() {
       {/* Modal WhatsApp */}
       <AnimatePresence>
         {showModal && (
-          <SuccessModal nom={form.nom} onClose={handleCloseModal} t={t} />
+          <SuccessModal nom={form.nom} onClose={handleCloseModal} t={t} isReturning={isReturning} previousCount={previousCount} />
         )}
       </AnimatePresence>
 
