@@ -1,13 +1,17 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLang } from "../context/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const { lang, setLang, t } = useLang();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("Accueil");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // id de section qu'on veut atteindre après un changement de page
+  const pendingScroll = useRef<string | null>(null);
 
   const links = [
     { label: t("Accueil", "Home"), id: t("Accueil", "Home") },
@@ -17,7 +21,10 @@ const Navbar = () => {
     { label: "Contact", id: "Contact" },
   ];
 
+  const isHome = location.pathname === "/";
+
   useEffect(() => {
+    if (!isHome) return;
     const onScroll = () => {
       const sections = document.querySelectorAll("section");
       let current = links[0].id;
@@ -30,19 +37,44 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [lang]);
+  }, [lang, isHome]);
+
+  // Une fois qu'on est revenu sur la home, on scroll vers la section demandée
+  useEffect(() => {
+    if (isHome && pendingScroll.current) {
+      const id = pendingScroll.current;
+      pendingScroll.current = null;
+      // on laisse le temps au DOM de la home de se monter
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+            setActive(id);
+          }
+        }, 50);
+      });
+    }
+  }, [isHome, location.pathname]);
 
   const scrollToSection = (id: string) => {
-    setActive(id);
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth" });
+    if (isHome) {
+      setActive(id);
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // on n'est pas sur la home : on y retourne puis on scroll
+      pendingScroll.current = id;
+      navigate("/");
+    }
     if (window.innerWidth < 768) {
       setTimeout(() => setOpen(false), 400);
     }
   };
 
   const isContact = (label: string) => label === "Contact";
+  const isOrderPage = location.pathname === "/commande";
 
   return (
     <header className="w-full backdrop-blur-md sticky top-0 z-50">
@@ -54,6 +86,8 @@ const Navbar = () => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.35 }}
           className="flex items-center gap-2 flex-shrink-0"
+          onClick={() => scrollToSection(t("Accueil", "Home"))}
+          style={{ cursor: "pointer" }}
         >
           <img src="/logoblanc.png" alt="Logo JP Graphic Design" className="w-10 h-10" />
           <span className="font-coco font-extralight text-sm text-white/70">
@@ -70,12 +104,12 @@ const Navbar = () => {
                   onClick={() => scrollToSection(l.id)}
                   className="font-coco font-extrabold px-4 py-2 rounded-xl transition-all duration-200 text-sm"
                   style={{
-                    color: active === l.id ? "#fff" : "#f2cc6a",
-                    background: active === l.id ? "rgba(255,255,255,0.12)" : "transparent",
-                    boxShadow: active === l.id ? "0 2px 12px rgba(0,0,0,0.12)" : "none",
+                    color: isHome && active === l.id ? "#fff" : "#f2cc6a",
+                    background: isHome && active === l.id ? "rgba(255,255,255,0.12)" : "transparent",
+                    boxShadow: isHome && active === l.id ? "0 2px 12px rgba(0,0,0,0.12)" : "none",
                   }}
-                  onMouseEnter={e => { if (active !== l.id) (e.currentTarget as HTMLElement).style.color = "#fff"; }}
-                  onMouseLeave={e => { if (active !== l.id) (e.currentTarget as HTMLElement).style.color = "#f2cc6a"; }}
+                  onMouseEnter={e => { if (!(isHome && active === l.id)) (e.currentTarget as HTMLElement).style.color = "#fff"; }}
+                  onMouseLeave={e => { if (!(isHome && active === l.id)) (e.currentTarget as HTMLElement).style.color = "#f2cc6a"; }}
                 >
                   {l.label}
                 </button>
@@ -118,7 +152,12 @@ const Navbar = () => {
             whileHover={{ scale: 1.05, y: -1 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => navigate("/commande")}
-            className="font-coco font-extrabold text-sm px-5 py-2.5 rounded-xl border border-[#f2cc6a]/50 text-[#f2cc6a] hover:bg-[#f2cc6a]/10 transition-all duration-200"
+            className="font-coco font-extrabold text-sm px-5 py-2.5 rounded-xl border transition-all duration-200"
+            style={{
+              borderColor: isOrderPage ? "#f2cc6a" : "rgba(242,204,106,0.5)",
+              color: "#f2cc6a",
+              background: isOrderPage ? "rgba(242,204,106,0.1)" : "transparent",
+            }}
           >
             {t("Commander", "Order")}
           </motion.button>
@@ -158,8 +197,8 @@ const Navbar = () => {
                           border: "none",
                         }
                         : {
-                          color: active === l.id ? "#fff" : "#f2cc6a",
-                          background: active === l.id ? "rgba(255,255,255,0.12)" : "transparent",
+                          color: isHome && active === l.id ? "#fff" : "#f2cc6a",
+                          background: isHome && active === l.id ? "rgba(255,255,255,0.12)" : "transparent",
                         }
                     }
                   >
@@ -181,8 +220,10 @@ const Navbar = () => {
                   onClick={() => { navigate("/commande"); setOpen(false); }}
                   className="w-full text-left font-coco font-extrabold px-3 py-2.5 rounded-xl text-sm"
                   style={{
-                    background: "linear-gradient(to right, #f2cc6a, rgba(255,255,255,0.8))",
-                    color: "#fff",
+                    background: isOrderPage
+                      ? "rgba(242,204,106,0.2)"
+                      : "linear-gradient(to right, #f2cc6a, rgba(255,255,255,0.8))",
+                    color: isOrderPage ? "#f2cc6a" : "#fff",
                   }}
                 >
                   {t("Commander", "Order")}

@@ -7,7 +7,7 @@ export interface GridItem {
 }
 
 export const ALL_ITEMS: GridItem[] = [
-    // Event Posters (1-32)
+    // Event Posters (1-52)
     { id: "1", colSpan: 1, rowSpan: 4, image: "/bt17.jpeg", filter: "Event Posters" },
     { id: "2", colSpan: 1, rowSpan: 2, image: "/bt2.jpeg", filter: "Event Posters" },
     { id: "3", colSpan: 1, rowSpan: 4, image: "/bt4.jpeg", filter: "Event Posters" },
@@ -38,11 +38,29 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "28", colSpan: 1, rowSpan: 4, image: "/bt30.jpeg", filter: "Event Posters" },
     { id: "29", colSpan: 1, rowSpan: 4, image: "/bt31.jpeg", filter: "Event Posters" },
     { id: "30", colSpan: 1, rowSpan: 2, image: "/bt32.jpeg", filter: "Event Posters" },
-    { id: "31", colSpan: 1, rowSpan: 2, image: "/bt35.jpeg", filter: "Event Posters" },
-    { id: "32", colSpan: 1, rowSpan: 2, image: "/bt34.jpeg", filter: "Event Posters" },
+    { id: "31", colSpan: 1, rowSpan: 4, image: "/bt35.jpeg", filter: "Event Posters" },
+    { id: "32", colSpan: 1, rowSpan: 4, image: "/bt34.jpeg", filter: "Event Posters" },
+    { id: "33", colSpan: 1, rowSpan: 2, image: "/bt36.jpeg", filter: "Event Posters" },
+    { id: "34", colSpan: 1, rowSpan: 2, image: "/bt37.jpeg", filter: "Event Posters" },
+    { id: "35", colSpan: 1, rowSpan: 4, image: "/bt38.jpeg", filter: "Event Posters" },
+    { id: "36", colSpan: 1, rowSpan: 4, image: "/bt39.jpeg", filter: "Event Posters" },
+    { id: "37", colSpan: 1, rowSpan: 2, image: "/bt40.jpeg", filter: "Event Posters" },
+    { id: "38", colSpan: 1, rowSpan: 2, image: "/bt41.jpeg", filter: "Event Posters" },
+    { id: "39", colSpan: 1, rowSpan: 4, image: "/bt42.jpeg", filter: "Event Posters" },
+    { id: "40", colSpan: 1, rowSpan: 4, image: "/bt43.jpeg", filter: "Event Posters" },
+    { id: "41", colSpan: 1, rowSpan: 2, image: "/bt44.jpeg", filter: "Event Posters" },
+    { id: "42", colSpan: 1, rowSpan: 2, image: "/bt45.jpeg", filter: "Event Posters" },
+    { id: "43", colSpan: 1, rowSpan: 4, image: "/bt46.jpeg", filter: "Event Posters" },
+    { id: "44", colSpan: 1, rowSpan: 4, image: "/bt47.jpeg", filter: "Event Posters" },
+    { id: "45", colSpan: 1, rowSpan: 2, image: "/bt48.jpeg", filter: "Event Posters" },
+    { id: "46", colSpan: 1, rowSpan: 2, image: "/bt49.jpeg", filter: "Event Posters" },
+    { id: "47", colSpan: 1, rowSpan: 4, image: "/bt50.jpeg", filter: "Event Posters" },
+    { id: "48", colSpan: 1, rowSpan: 4, image: "/bt51.jpeg", filter: "Event Posters" },
+
 
     // Concert (33-41)
-    { id: "33", colSpan: 2, rowSpan: 4, image: "/ac2.jpeg", filter: "Concert" },    
+    { id: "33", colSpan: 2, rowSpan: 4, image: "/ac10.jpeg", filter: "Concert" },
+    { id: "33", colSpan: 2, rowSpan: 2, image: "/ac2.jpeg", filter: "Concert" },    
     { id: "34", colSpan: 2, rowSpan: 2, image: "/ac1.jpeg", filter: "Concert" },
     { id: "35", colSpan: 2, rowSpan: 2, image: "/bt9.jpeg", filter: "Concert" },
     { id: "36", colSpan: 2, rowSpan: 4, image: "/ac9.jpeg", filter: "Concert" },
@@ -71,9 +89,12 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "55", colSpan: 1, rowSpan: 2, image: "/idv19.jpeg", filter: "Identité visuel" },
     { id: "56", colSpan: 1, rowSpan: 2, image: "/idv20.jpeg", filter: "Identité visuel" },
     { id: "57", colSpan: 1, rowSpan: 2, image: "/idv21.jpeg", filter: "Identité visuel" },
-    { id: "58", colSpan: 1, rowSpan: 2, image: "/idv35.jpeg", filter: "Identité visuel" },
-    { id: "59", colSpan: 2, rowSpan: 4, image: "/idv36.jpeg", filter: "Identité visuel" },
-    { id: "60", colSpan: 1, rowSpan: 2, image: "/idv37.jpeg", filter: "Identité visuel" },
+    { id: "58", colSpan: 1, rowSpan: 4, image: "/idv35.jpeg", filter: "Identité visuel" },
+    { id: "59", colSpan: 1, rowSpan: 4, image: "/idv36.jpeg", filter: "Identité visuel" },
+    { id: "60", colSpan: 1, rowSpan: 4, image: "/idv37.jpeg", filter: "Identité visuel" },
+    { id: "180", colSpan: 1, rowSpan: 4, image: "/idv38.jpeg", filter: "Identité visuel" },
+    { id: "182", colSpan: 1, rowSpan: 4, image: "/idv39.jpeg", filter: "Identité visuel" },
+    { id: "183", colSpan: 1, rowSpan: 4, image: "/idv40.jpeg", filter: "Identité visuel" },
 
     // Retouche Photo (61-66)
     { id: "61", colSpan: 2, rowSpan: 4, image: "/rtp1.jpeg", filter: "Retouche Photo" },
@@ -109,10 +130,10 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "87", colSpan: 1, rowSpan: 2, image: "/af36.jpeg", filter: "Campagne Académique" },
 
     // Affiche (88-135)
-    { id: "88", colSpan: 1, rowSpan: 2, image: "/af.jpeg", filter: "Affiche" },
-    { id: "89", colSpan: 1, rowSpan: 4, image: "/af21.jpeg", filter: "Affiche" },
-    { id: "90", colSpan: 1, rowSpan: 2, image: "/af27.jpeg", filter: "Affiche" },
-    { id: "91", colSpan: 1, rowSpan: 4, image: "/af3.jpeg", filter: "Affiche" },
+    { id: "88", colSpan: 1, rowSpan: 2, image: "/af65.jpeg", filter: "Affiche" },
+    { id: "89", colSpan: 1, rowSpan: 4, image: "/af67.jpeg", filter: "Affiche" },
+    { id: "90", colSpan: 1, rowSpan: 2, image: "/af69.jpeg", filter: "Affiche" },
+    { id: "91", colSpan: 1, rowSpan: 4, image: "/af68.jpeg", filter: "Affiche" },
     { id: "92", colSpan: 1, rowSpan: 2, image: "/af4.jpeg", filter: "Affiche" },
     { id: "93", colSpan: 1, rowSpan: 2, image: "/af5.jpeg", filter: "Affiche" },
     { id: "94", colSpan: 1, rowSpan: 2, image: "/af25.jpeg", filter: "Affiche" },
@@ -155,8 +176,30 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "131", colSpan: 1, rowSpan: 2, image: "/af29-1.jpeg", filter: "Affiche" },
     { id: "132", colSpan: 1, rowSpan: 2, image: "/af47.jpeg", filter: "Affiche" },
     { id: "133", colSpan: 1, rowSpan: 2, image: "/af54.jpeg", filter: "Affiche" },
+    { id: "183", colSpan: 1, rowSpan: 2, image: "/af55.jpeg", filter: "Affiche" },
+    { id: "185", colSpan: 1, rowSpan: 2, image: "/af56.jpeg", filter: "Affiche" },
+    { id: "186", colSpan: 1, rowSpan: 2, image: "/af57.jpeg", filter: "Affiche" },
+    { id: "187", colSpan: 1, rowSpan: 2, image: "/af58.jpeg", filter: "Affiche" },
+    { id: "188", colSpan: 1, rowSpan: 2, image: "/af59.jpeg", filter: "Affiche" },
+    { id: "189", colSpan: 1, rowSpan: 2, image: "/af60.jpeg", filter: "Affiche" },
+    { id: "190", colSpan: 1, rowSpan: 2, image: "/af61.jpeg", filter: "Affiche" },
+    { id: "191", colSpan: 1, rowSpan: 2, image: "/af62.jpeg", filter: "Affiche" },
+    { id: "192", colSpan: 1, rowSpan: 2, image: "/af63.jpeg", filter: "Affiche" },
+    { id: "193", colSpan: 1, rowSpan: 2, image: "/af64.jpeg", filter: "Affiche" },
+    { id: "194", colSpan: 1, rowSpan: 2, image: "/af.jpeg", filter: "Affiche" },
+    { id: "196", colSpan: 1, rowSpan: 2, image: "/af21.jpeg", filter: "Affiche" },
+    { id: "197", colSpan: 1, rowSpan: 2, image: "/af3.jpeg", filter: "Affiche" },
+    { id: "198", colSpan: 1, rowSpan: 2, image: "/af27.jpeg", filter: "Affiche" },
+    { id: "199", colSpan: 1, rowSpan: 2, image: "/af70.jpeg", filter: "Affiche" },
+    { id: "200", colSpan: 1, rowSpan: 2, image: "/af71.jpeg", filter: "Affiche" },
+    { id: "201", colSpan: 1, rowSpan: 2, image: "/af72.jpeg", filter: "Affiche" },
+    { id: "184", colSpan: 1, rowSpan: 2, image: "/af73.jpeg", filter: "Affiche" },
+
 
     // Dépliant Professionnel (134-164)
+    { id: "202", colSpan: 1, rowSpan: 2, image: "/dp32.jpeg", filter: "Dépliant Professionnel" },
+    { id: "203", colSpan: 1, rowSpan: 2, image: "/dp33.jpeg", filter: "Dépliant Professionnel" },
+    { id: "204", colSpan: 1, rowSpan: 2, image: "/dp34.jpeg", filter: "Dépliant Professionnel" },
     { id: "134", colSpan: 1, rowSpan: 2, image: "/dp.jpeg", filter: "Dépliant Professionnel" },
     { id: "135", colSpan: 1, rowSpan: 2, image: "/dp1.jpeg", filter: "Dépliant Professionnel" },
     { id: "136", colSpan: 1, rowSpan: 2, image: "/dp2.jpeg", filter: "Dépliant Professionnel" },
@@ -188,6 +231,9 @@ export const ALL_ITEMS: GridItem[] = [
     { id: "162", colSpan: 1, rowSpan: 2, image: "/dp29.jpeg", filter: "Dépliant Professionnel" },
     { id: "163", colSpan: 1, rowSpan: 2, image: "/dp30.jpeg", filter: "Dépliant Professionnel" },
     { id: "164", colSpan: 2, rowSpan: 2, image: "/idv26.jpeg", filter: "Dépliant Professionnel" },
+    { id: "184", colSpan: 2, rowSpan: 2, image: "/dp35.jpeg", filter: "Dépliant Professionnel" },
+    { id: "185", colSpan: 2, rowSpan: 2, image: "/dp36.jpeg", filter: "Dépliant Professionnel" },
+    { id: "186", colSpan: 2, rowSpan: 2, image: "/dp37.jpeg", filter: "Dépliant Professionnel" },
 
     // Présentation (165-180)
     { id: "165", colSpan: 2, rowSpan: 2, image: "/pr.JPG", filter: "Présentation" },

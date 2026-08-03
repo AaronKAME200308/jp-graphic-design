@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useLang } from "../context/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 const heroVariants: Variants = {
   hidden: { opacity: 0, translateY: 20 },
@@ -24,6 +25,8 @@ const Home = () => {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const navigate = useNavigate();
 
   return (
     <section
@@ -85,12 +88,12 @@ const Home = () => {
                 {t("Voir mes projets", "View my projects")}
               </motion.div>
             </button>
-            <button onClick={() => scrollToSection("Contact")}>
+            <button onClick={() =>{navigate("/commande");}}>
               <motion.div
                 whileHover={buttonHover}
                 className="font-coco font-extrabold px-6 py-3 rounded-full border border-white/30 text-white/85"
               >
-                {t("Me contacter", "Contact me")}
+                {t("Commander", "Order")}
               </motion.div>
             </button>
           </motion.div>

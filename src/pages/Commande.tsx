@@ -5,18 +5,13 @@ import {
   User, Briefcase, Target, Palette, Clock, CheckCircle2
 } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../lib/supabaseClient";
 import { FaWhatsapp } from "react-icons/fa";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL ?? "",
-  import.meta.env.VITE_SUPABASE_ANON_KEY ?? ""
-);
 
 const WHATSAPP_NUMBER = "237673846813";
 
 const BUDGET_OPTIONS = [
-  "5 000 – 15 000 FCFA",
+  "10 000 – 15 000 FCFA",
   "15 000 – 30 000 FCFA",
   "30 000 – 60 000 FCFA",
   "60 000 – 100 000 FCFA",
@@ -369,12 +364,12 @@ const StarRating = ({ label, value, onChange, required }: {
       <div className="flex gap-3 justify-center mt-3">
         {[1, 2, 3, 4, 5].map((star) => (
           <div key={star} className="flex flex-col items-center gap-1">
-            <span className="text-white/25 text-xs">{star}</span>
+            <span className="text-white text-xs">{star}</span>
             <motion.button type="button" whileHover={{ scale: 1.3, rotate: 5 }} whileTap={{ scale: 0.9 }}
               onMouseEnter={() => setHovered(star)} onMouseLeave={() => setHovered(0)}
               onClick={() => onChange(star)}
               className={`text-3xl transition-all duration-150 ${(hovered || value) >= star ? "drop-shadow-[0_0_8px_rgba(242,204,106,0.8)]" : ""}`}>
-              <span className={(hovered || value) >= star ? "text-[#f2cc6a]" : "text-white/15"}>★</span>
+              <span className={(hovered || value) >= star ? "text-[#fdc331]" : "text-white/30"}>★</span>
             </motion.button>
           </div>
         ))}
@@ -496,8 +491,9 @@ export default function Commande() {
         const filePath = `${folderPath}/${file.name.replace(/\s+/g, "_")}`;
         const { error: upErr } = await supabase.storage.from("commandes-files").upload(filePath, file);
         if (upErr) throw upErr;
-        const { data: urlData } = supabase.storage.from("commandes-files").getPublicUrl(filePath);
-        fileUrls.push(urlData.publicUrl);
+        // Le bucket est privé : on stocke le chemin, pas une URL publique.
+        // L'admin génère une URL signée à la demande depuis le dashboard.
+        fileUrls.push(filePath);
       }
 
       // 2. Résolution service "autre"
@@ -640,7 +636,7 @@ export default function Commande() {
                 <span className="text-[#f2cc6a] text-xs font-bold">2</span>
               </span>
               <p className="text-white/60 text-sm">
-                {t("Allers-retours inclus — 2 séries de modifications. Au-delà, facturation supplémentaire.", "Revisions included — 2 rounds of modifications. Additional charges beyond that.")}
+                {t("Allers-retours inclus 2 séries de modifications. Au-delà, facturation supplémentaire.", "Revisions included — 2 rounds of modifications. Additional charges beyond that.")}
               </p>
             </div>
             <div className="h-px bg-white/8" />

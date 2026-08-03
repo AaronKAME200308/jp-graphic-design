@@ -1,0 +1,23 @@
+# Redirige toutes les routes vers index.html pour que React Router
+# puisse gérer le routage côté client (SPA). Sans ce fichier, toute URL
+# tapée directement (ex: /admin, /commande) renvoie un 404 du serveur.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Si le fichier ou dossier demandé existe réellement, on le sert tel quel
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Sinon, on renvoie index.html et React Router prend le relais
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Évite les problèmes de mise en cache agressive sur index.html
+<IfModule mod_headers.c>
+  <FilesMatch "index\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>
